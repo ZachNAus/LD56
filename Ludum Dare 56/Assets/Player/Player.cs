@@ -6,22 +6,25 @@ public class Player : MonoBehaviour
 {
 	public static Player instance;
 
+	[Header("Dependencies")]
 	public CharacterController controller;
 	public GameObject playerCamera;
 	public Transform model;
 	public Animator animator;
 
-	[Tooltip("Move speed in units per second")]
+	[Header("Tweakable values")]
+	[Tooltip("Move speed in units per second.")]
 	public float moveSpeed;
 	public float jumpPower;
 	public float modelRotateSpeed;
-	// Velocity in units per second. Can be set to whatever.
+	[Tooltip("Velocity in units per second.")]
 	public Vector3 velocity;
-	// Gravity in units per second.
+	[Tooltip("Gravity in units per second.")]
 	public Vector3 gravity;
 
-	public Vector3 input;
-	public bool doJump;
+	// Buffered input.
+	private Vector3 input;
+	private bool doJump;
 
 	private Holdable holdable;
 
@@ -46,10 +49,20 @@ public class Player : MonoBehaviour
 		input.x = Input.GetAxisRaw("Horizontal");
 		input.z = Input.GetAxisRaw("Vertical");
 		doJump |= Input.GetKeyDown(KeyCode.Space);
+	}
+
+	private void FixedUpdate()
+	{
+		// Debug hotkey.
+		if (Input.GetKeyDown(KeyCode.G))
+		{
+			PlayerStats.instance.TakeDamage(1);
+		}
 
 		if (holdable != null)
 		{
 			// Holding something.
+			// TODO: Probably need to buffer mouse input to avoid missed input.
 			if (Input.GetMouseButtonDown(1))
 			{
 				DropHoldable();
@@ -85,15 +98,6 @@ public class Player : MonoBehaviour
 					}
 				}
 			}
-		}
-	}
-
-	private void FixedUpdate()
-	{
-		// Debug hotkey.
-		if (Input.GetKeyDown(KeyCode.G))
-		{
-			PlayerStats.instance.TakeDamage(1);
 		}
 
 		// Apply lateral movement (side and forwards).
