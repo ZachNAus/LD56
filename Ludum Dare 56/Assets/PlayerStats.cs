@@ -11,4 +11,10 @@ public class PlayerStats : BaseHealth
 		base.Awake();
 		instance = this;
 	}
+
+	public override void Die()
+	{
+		// TODO:
+		//GetComponent<Player>().Die();
+	}
 }
