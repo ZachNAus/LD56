@@ -206,9 +206,11 @@ public class Player : MonoBehaviour
 	{
 		if (!isDead)
 		{
+			// Switch to dead state.
 			isDead = true;
 			velocity.x = velocity.z = 0;
 			DropHoldable();
+			animator.SetLayerWeight(AnimatorLayerTorso(), 0);
 			animator.Play("Die");
 		}
 	}
