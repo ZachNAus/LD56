@@ -696,6 +696,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 1778706346}
+  OnTakedamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &931558501
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1438,6 +1441,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 1814239842}
+  OnTakedamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1754656104}
+        m_TargetAssemblyTypeName: AiMovement, Assembly-CSharp
+        m_MethodName: Stun
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &1754656110
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1860,6 +1878,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 398261316}
+  OnTakedamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2017604200}
+        m_TargetAssemblyTypeName: AiMovement, Assembly-CSharp
+        m_MethodName: Stun
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &2017604202
 Rigidbody:
   m_ObjectHideFlags: 0

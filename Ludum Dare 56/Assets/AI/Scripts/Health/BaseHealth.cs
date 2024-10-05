@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BaseHealth : MonoBehaviour, IHasHealth
@@ -8,6 +9,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	[SerializeField] float maxHealth;
 
 	[SerializeField] Image healthBar;
+
+	public UnityEvent OnTakedamage;
 
 	public float MaxHealth => maxHealth;
 	public float CurrentHealth { get; private set; }
@@ -28,6 +31,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 		
 		if (healthBar)
 			healthBar.fillAmount = CurrentHealth / MaxHealth;
+
+		OnTakedamage?.Invoke();
 
 		if (IsDead)
 			Die();

@@ -92,8 +92,7 @@ public class AIShoot : AIChase
 		proj.transform.position = spawnPos.position;
 		proj.transform.eulerAngles = spawnPos.eulerAngles;
 
-
-		if(stopTimeWhenShooting > 0)
+		if (stopTimeWhenShooting > 0)
 		{
 			StopMoving();
 
