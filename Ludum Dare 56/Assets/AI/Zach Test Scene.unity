@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &84942147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 84942148}
+  m_Layer: 7
+  m_Name: Proj Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &84942148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84942147}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017604197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &285158282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,11 +1306,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c06753b93f376488170d6d1962703a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Movement: {fileID: 0}
   agent: {fileID: 1754656102}
   preferredDistance: 10
-  projectileToSummon: {fileID: 8018120239718197499, guid: fd7f2696a7956264da56d0cb7efa846e,
+  shootingCondition: 0
+  projectileToSummon: {fileID: 9141859269874795857, guid: fd7f2696a7956264da56d0cb7efa846e,
     type: 3}
   spawnPos: {fileID: 1125772501}
+  stopTimeWhenShooting: 0
   shootDelay: 2
 --- !u!114 &1754656104
 MonoBehaviour:
@@ -1670,10 +1704,10 @@ GameObject:
   - component: {fileID: 2017604195}
   - component: {fileID: 2017604194}
   - component: {fileID: 2017604200}
-  - component: {fileID: 2017604199}
   - component: {fileID: 2017604198}
   - component: {fileID: 2017604201}
   - component: {fileID: 2017604202}
+  - component: {fileID: 2017604203}
   m_Layer: 7
   m_Name: Enemy (Slug)
   m_TagString: Untagged
@@ -1769,6 +1803,7 @@ Transform:
   m_Children:
   - {fileID: 671255910}
   - {fileID: 1673006280}
+  - {fileID: 84942148}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2017604198
@@ -1793,20 +1828,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2017604199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017604193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5969253d06a44b44aa387de55f046ccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 2017604198}
-  preferredDistance: 0
 --- !u!114 &2017604200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1824,7 +1845,7 @@ MonoBehaviour:
   activateRange: 10
   deactivationType: 0
   deactivateRange: 20
-  activationItem: {fileID: 2017604199}
+  activationItem: {fileID: 2017604203}
 --- !u!114 &2017604201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,6 +1887,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2017604203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017604193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c06753b93f376488170d6d1962703a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Movement: {fileID: 0}
+  agent: {fileID: 2017604198}
+  preferredDistance: 2
+  shootingCondition: 1
+  projectileToSummon: {fileID: 108467953100988835, guid: ceca62d1f75086f498438cd570ec9893,
+    type: 3}
+  spawnPos: {fileID: 84942148}
+  stopTimeWhenShooting: 0.4
+  shootDelay: 0.5
 --- !u!1 &2048173035
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,10 +14,7 @@ public class AIChase : AIActivationType
 
 	public override void Activate()
 	{
-		if (chaseRoutine != null)
-			StopCoroutine(chaseRoutine);
-
-		chaseRoutine = StartCoroutine(Co_Chase());
+		StartMoving();
 	}
 
 	public override void ActivateUpdate()
@@ -32,20 +29,26 @@ public class AIChase : AIActivationType
 
 	public override void Deactivate()
 	{
-		if (chaseRoutine != null)
-			StopCoroutine(chaseRoutine);
-
-		agent.isStopped = true;
+		StopMoving();
 	}
 
 	public override void Stun()
 	{
-		if (chaseRoutine != null)
-			StopCoroutine(chaseRoutine);
-
-		agent.isStopped = true;
+		StopMoving();
 	}
 	public override void StopStun()
+	{
+		StartMoving();
+	}
+
+	protected void StopMoving()
+	{
+		agent.isStopped = true;
+
+		if (chaseRoutine != null)
+			StopCoroutine(chaseRoutine);
+	}
+	protected void StartMoving()
 	{
 		chaseRoutine = StartCoroutine(Co_Chase());
 	}
