@@ -32,8 +32,13 @@ public class Player : MonoBehaviour
 	private bool keyGDown;
 
 	// State.
-	public bool isDead; // True if we are dead.
-	public bool isBlocking; // True if we are in the blocking state, i.e. our shield is out.
+	public enum PlayerState
+	{
+		Normal,
+		Blocking,
+		Dead,
+	}
+	public PlayerState state;
 
 	// Other.
 	private Holdable holdable;
@@ -61,6 +66,7 @@ public class Player : MonoBehaviour
 	private void Start()
 	{
 		// Temporary.
+		SetState(PlayerState.Normal);
 		SetHoldable(GetComponentInChildren<Holdable>());
 	}
 
@@ -83,103 +89,7 @@ public class Player : MonoBehaviour
 			PlayerStats.instance.TakeDamage(1);
 		}
 
-		if (isDead)
-		{
-			// Dead state.
-		}
-		else if (isBlocking)
-		{
-			// Blocking state.
-			if (!Input.GetKey(blockKey))
-			{
-				// TODO: Go back to normal.
-				isBlocking = false;
-				animator.Play("BlockEnd");
-				// TODO: Move to some on state enter/exit. Do this when going to dead state too.
-				shieldBack.SetActive(true);
-				shieldHeld.transform.DOKill();
-				shieldHeld.transform.DOScale(0f, 0.25f);
-			}
-		}
-		else
-		{
-			// Normal/regular state.
-			if (holdable != null)
-			{
-				// Holding something.
-				if (mouse2Down)
-				{
-					DropHoldable();
-				}
-				// Try to use the holdable.
-				else if (mouse1Down)
-				{
-					holdable.OnUse(true);
-				}
-				else if (mouse1Up)
-				{
-					holdable.OnUse(false);
-				}
-			}
-			else
-			{
-				// Not holding anything.
-				if (mouse1Down)
-				{
-					// Look for a holdable pickup.
-					// TODO: Better casting.
-					var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
-					foreach (var c in cast)
-					{
-						var pickup = c.transform.GetComponentInParent<Pickup>();
-						var hold = pickup?.Pick();
-						if (hold != null)
-						{
-							// Found something to hold.
-							Destroy(pickup.gameObject);
-							SetHoldable(hold);
-							break;
-						}
-					}
-				}
-			}
-
-			// Apply lateral movement (side and forwards).
-			var moveDir = new Vector3(input.x, 0, input.z);
-			// Move relative to the camera.
-			moveDir = playerCamera.transform.TransformDirection(moveDir);
-			moveDir.y = 0;
-			moveDir.Normalize();
-			velocity.x = moveDir.x * moveSpeed;
-			velocity.z = moveDir.z * moveSpeed;
-			if (moveDir.sqrMagnitude != 0)
-			{
-				// Rotate player to direction of camera.
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
-			}
-
-			// Apply jumping.
-			if (IsGrounded())
-			{
-				if (doJump && velocity.y <= 0f)
-				{
-					velocity.y += jumpPower;
-					animator.Play("Jump");
-				}
-				else if (Input.GetKey(blockKey))
-				{
-					// TODO: Have some way for holdables to prevent transitioning to block state?
-					isBlocking = true;
-					animator.SetLayerWeight(AnimatorLayerTorso(), 0);
-					velocity.x = velocity.z = 0;
-					shieldBack.gameObject.SetActive(false);
-					shieldHeld.transform.DOKill();
-					shieldHeld.transform.DOScale(1.3f, 0.25f);
-					// TODO: Hide holdable?
-					animator.Play("Block");
-				}
-			}
-		}
+		OnStateUpdate();
 
 		// Apply gravity.
 		velocity += gravity;
@@ -205,6 +115,153 @@ public class Player : MonoBehaviour
 		mouse1Up = false;
 		mouse2Down = false;
 		keyGDown = false;
+	}
+
+	public void SetState(PlayerState newState, bool ignoreCheck = false)
+	{
+		if (!ignoreCheck && newState == state)
+		{
+			return;
+		}
+
+		OnStateExit(state);
+		state = newState;
+		OnStateEnter(state);
+	}
+
+	private void OnStateExit(PlayerState exitingState)
+	{
+		switch (exitingState)
+		{
+			case PlayerState.Dead:
+			{
+			} break;
+			case PlayerState.Blocking:
+			{
+				animator.Play("BlockEnd");
+				shieldBack.SetActive(true);
+				shieldHeld.transform.DOKill();
+				shieldHeld.transform.DOScale(0f, 0.25f);
+			} break;
+			case PlayerState.Normal:
+			{
+			} break;
+		}
+	}
+
+	private void OnStateEnter(PlayerState enteringState)
+	{
+		switch (enteringState)
+		{
+			case PlayerState.Dead:
+			{
+				velocity.x = velocity.z = 0;
+				animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+				animator.Play("Die");
+			} break;
+			case PlayerState.Blocking:
+			{
+				animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+				velocity.x = velocity.z = 0;
+				shieldBack.gameObject.SetActive(false);
+				shieldHeld.transform.DOKill();
+				shieldHeld.transform.DOScale(1.3f, 0.25f);
+				// TODO: Hide holdable?
+				animator.Play("Block");
+			} break;
+			case PlayerState.Normal:
+			{
+			} break;
+		}
+	}
+
+	private void OnStateUpdate()
+	{
+		switch (state)
+		{
+			case PlayerState.Dead:
+			{
+				// Do nothing.
+			} break;
+			case PlayerState.Blocking:
+			{
+				if (!Input.GetKey(blockKey))
+				{
+					SetState(PlayerState.Normal);
+				}
+			} break;
+			case PlayerState.Normal:
+			{
+				if (holdable != null)
+				{
+					// Holding something.
+					if (mouse2Down)
+					{
+						DropHoldable();
+					}
+					// Try to use the holdable.
+					else if (mouse1Down)
+					{
+						holdable.OnUse(true);
+					}
+					else if (mouse1Up)
+					{
+						holdable.OnUse(false);
+					}
+				}
+				else
+				{
+					// Not holding anything.
+					if (mouse1Down)
+					{
+						// Look for a holdable pickup.
+						// TODO: Better casting.
+						var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
+						foreach (var c in cast)
+						{
+							var pickup = c.transform.GetComponentInParent<Pickup>();
+							var hold = pickup?.Pick();
+							if (hold != null)
+							{
+								// Found something to hold.
+								Destroy(pickup.gameObject);
+								SetHoldable(hold);
+								break;
+							}
+						}
+					}
+				}
+
+				// Apply lateral movement (side and forwards).
+				var moveDir = new Vector3(input.x, 0, input.z);
+				// Move relative to the camera.
+				moveDir = playerCamera.transform.TransformDirection(moveDir);
+				moveDir.y = 0;
+				moveDir.Normalize();
+				velocity.x = moveDir.x * moveSpeed;
+				velocity.z = moveDir.z * moveSpeed;
+				if (moveDir.sqrMagnitude != 0)
+				{
+					// Rotate player to direction of camera.
+					transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
+				}
+
+				// Apply jumping.
+				if (IsGrounded())
+				{
+					if (doJump && velocity.y <= 0f)
+					{
+						velocity.y += jumpPower;
+						animator.Play("Jump");
+					}
+					else if (Input.GetKey(blockKey))
+					{
+						// TODO: Have some way for holdables to prevent transitioning to block state?
+						SetState(PlayerState.Blocking);
+					}
+				}
+			} break;
+		}
 	}
 
 	/// <summary>
@@ -243,14 +300,9 @@ public class Player : MonoBehaviour
 	/// </summary>
 	public void Die()
 	{
-		if (!isDead)
+		if (state != PlayerState.Dead)
 		{
-			// Switch to dead state.
-			isDead = true;
-			velocity.x = velocity.z = 0;
-			DropHoldable();
-			animator.SetLayerWeight(AnimatorLayerTorso(), 0);
-			animator.Play("Die");
+			SetState(PlayerState.Dead);
 		}
 	}
 
