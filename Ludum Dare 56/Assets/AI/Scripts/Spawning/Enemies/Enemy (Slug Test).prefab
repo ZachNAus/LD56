@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 4909658105931238243}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -275,8 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   activationType: 0
-  activateRange: 10
-  deactivationType: 0
+  activateRange: 2000
+  deactivationType: 1
   deactivateRange: 20
   activationItem: {fileID: 7678249926429808980}
 --- !u!195 &1165427860638864103
@@ -372,14 +372,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c06753b93f376488170d6d1962703a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Movement: {fileID: 0}
+  Movement: {fileID: 958832219146620498}
   agent: {fileID: 1165427860638864103}
-  preferredDistance: 2
+  preferredDistance: 0
   shootingCondition: 1
   projectileToSummon: {fileID: 108467953100988835, guid: ceca62d1f75086f498438cd570ec9893,
     type: 3}
   spawnPos: {fileID: 6026995076361688604}
-  stopTimeWhenShooting: 0.4
+  stopTimeWhenShooting: 0
   shootDelay: 0.5
 --- !u!1 &6342966013310987909
 GameObject:
