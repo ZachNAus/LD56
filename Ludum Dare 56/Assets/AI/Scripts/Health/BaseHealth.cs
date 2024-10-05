@@ -30,7 +30,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 
 	public virtual void TakeDamage(float damage)
 	{
-		if (IsDead) return;
+		if (IsDead || damage == 0) return;
 
 		CurrentHealth -= damage;
 		CurrentHealth = Mathf.Max(0, CurrentHealth);
