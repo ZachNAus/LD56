@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
 	private Holdable holdable;
 	private bool isDead;
 
+	public Transform ModelRightHand() => RecursiveFindChild(model, "mixamorig:RightHand");
+
 	private void Awake()
 	{
 		instance = this;
@@ -204,6 +206,7 @@ public class Player : MonoBehaviour
 		{
 			isDead = true;
 			velocity.x = velocity.z = 0;
+			DropHoldable();
 			animator.Play("Die");
 		}
 	}
@@ -217,5 +220,25 @@ public class Player : MonoBehaviour
 	{
 		player = collision.GetComponentInParent<Player>();
 		return player != null;
+	}
+
+	private static Transform RecursiveFindChild(Transform parent, string childName)
+	{
+		foreach (Transform child in parent)
+		{
+			if(child.name == childName)
+			{
+				return child;
+			}
+			else
+			{
+				Transform found = RecursiveFindChild(child, childName);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
 	}
 }
