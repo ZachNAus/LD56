@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -25,8 +26,17 @@ public class Player : MonoBehaviour
 	// Buffered input.
 	private Vector3 input;
 	private bool doJump;
+	private bool mouse1Down, mouse1Up;
+	private bool mouse2Down;
+	private bool keyGDown;
 
+	// Other.
 	private Holdable holdable;
+	private bool isDead;
+
+	// Layer with a mask for the waist up, so we can do sword swing animations etc without affecting running animation.
+	public int AnimatorLayerTorso() => animator.GetLayerIndex("Torso");
+	public Transform ModelRightHand() => RecursiveFindChild(model, "mixamorig:RightHand");
 
 	private void Awake()
 	{
@@ -49,78 +59,88 @@ public class Player : MonoBehaviour
 		input.x = Input.GetAxisRaw("Horizontal");
 		input.z = Input.GetAxisRaw("Vertical");
 		doJump |= Input.GetKeyDown(KeyCode.Space);
+		mouse1Down |= Input.GetMouseButtonDown(0);
+		mouse1Up |= Input.GetMouseButtonUp(0);
+		mouse2Down |= Input.GetMouseButtonDown(1);
+		keyGDown |= Input.GetKeyDown(KeyCode.G);
 	}
 
 	private void FixedUpdate()
 	{
 		// Debug hotkey.
-		if (Input.GetKeyDown(KeyCode.G))
+		if (keyGDown)
 		{
 			PlayerStats.instance.TakeDamage(1);
 		}
 
-		if (holdable != null)
+		if (isDead)
 		{
-			// Holding something.
-			// TODO: Probably need to buffer mouse input to avoid missed input.
-			if (Input.GetMouseButtonDown(1))
-			{
-				DropHoldable();
-			}
-			// Try to use the holdable.
-			else if (Input.GetMouseButtonDown(0))
-			{
-				holdable.OnUse(true);
-			}
-			else if (Input.GetMouseButtonUp(0))
-			{
-				holdable.OnUse(false);
-			}
+			// Dead state.
 		}
 		else
 		{
-			// Not holding anything.
-			if (Input.GetMouseButtonDown(0))
+			// Normal/regular state.
+			if (holdable != null)
 			{
-				// Look for a holdable pickup.
-				// TODO: Better casting.
-				var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
-				foreach (var c in cast)
+				// Holding something.
+				if (mouse2Down)
 				{
-					var pickup = c.transform.GetComponentInParent<Pickup>();
-					var hold = pickup?.Pick();
-					if (hold != null)
+					DropHoldable();
+				}
+				// Try to use the holdable.
+				else if (mouse1Down)
+				{
+					holdable.OnUse(true);
+				}
+				else if (mouse1Up)
+				{
+					holdable.OnUse(false);
+				}
+			}
+			else
+			{
+				// Not holding anything.
+				if (mouse1Down)
+				{
+					// Look for a holdable pickup.
+					// TODO: Better casting.
+					var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
+					foreach (var c in cast)
 					{
-						// Found something to hold.
-						Destroy(pickup.gameObject);
-						SetHoldable(hold);
-						break;
+						var pickup = c.transform.GetComponentInParent<Pickup>();
+						var hold = pickup?.Pick();
+						if (hold != null)
+						{
+							// Found something to hold.
+							Destroy(pickup.gameObject);
+							SetHoldable(hold);
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		// Apply lateral movement (side and forwards).
-		var moveDir = new Vector3(input.x, 0, input.z);
-		// Move relative to the camera.
-		moveDir = playerCamera.transform.TransformDirection(moveDir);
-		moveDir.y = 0;
-		moveDir.Normalize();
-		velocity.x = moveDir.x * moveSpeed;
-		velocity.z = moveDir.z * moveSpeed;
-		if (moveDir.sqrMagnitude != 0)
-		{
-			// Rotate player to direction of camera.
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
-		}
+			// Apply lateral movement (side and forwards).
+			var moveDir = new Vector3(input.x, 0, input.z);
+			// Move relative to the camera.
+			moveDir = playerCamera.transform.TransformDirection(moveDir);
+			moveDir.y = 0;
+			moveDir.Normalize();
+			velocity.x = moveDir.x * moveSpeed;
+			velocity.z = moveDir.z * moveSpeed;
+			if (moveDir.sqrMagnitude != 0)
+			{
+				// Rotate player to direction of camera.
+				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
+			}
 
-		// Apply jumping.
-		if (doJump && velocity.y <= 0f && IsGrounded())
-		{
-			velocity.y += jumpPower;
-			animator.Play("Jump");
+			// Apply jumping.
+			if (doJump && velocity.y <= 0f && IsGrounded())
+			{
+				velocity.y += jumpPower;
+				animator.Play("Jump");
+			}
 		}
-		doJump = false;
 
 		// Apply gravity.
 		velocity += gravity;
@@ -138,6 +158,14 @@ public class Player : MonoBehaviour
 		// Update animator.
 		animator.SetFloat("xVelocity", velocity.x);
 		animator.SetFloat("zVelocity", velocity.z);
+
+		// Clear buffered input.
+		input = Vector3.zero;
+		doJump = false;
+		mouse1Down = false;
+		mouse1Up = false;
+		mouse2Down = false;
+		keyGDown = false;
 	}
 
 	/// <summary>
@@ -171,6 +199,22 @@ public class Player : MonoBehaviour
 		holdable?.OnEnter();
 	}
 
+	/// <summary>
+	/// Only PlayerStats should call this.
+	/// </summary>
+	public void Die()
+	{
+		if (!isDead)
+		{
+			// Switch to dead state.
+			isDead = true;
+			velocity.x = velocity.z = 0;
+			DropHoldable();
+			animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+			animator.Play("Die");
+		}
+	}
+
 	public static bool IsPlayer(GameObject collision)
 	{
 		return TryGetPlayer(collision, out var _);
@@ -180,5 +224,25 @@ public class Player : MonoBehaviour
 	{
 		player = collision.GetComponentInParent<Player>();
 		return player != null;
+	}
+
+	private static Transform RecursiveFindChild(Transform parent, string childName)
+	{
+		foreach (Transform child in parent)
+		{
+			if(child.name == childName)
+			{
+				return child;
+			}
+			else
+			{
+				Transform found = RecursiveFindChild(child, childName);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
 	}
 }

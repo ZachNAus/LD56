@@ -460,8 +460,6 @@ MonoBehaviour:
   modelRotateSpeed: 6
   velocity: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: -1, z: 0}
-  input: {x: 0, y: 0, z: 0}
-  doJump: 0
 --- !u!114 &3916818270857482343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +784,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3585603401986451837}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 4748bb7ab1c26274ead3b528e8e241c1, type: 3}
   m_Controller: {fileID: 9100000, guid: c9eca53a0985b324ab406eee043eeb9f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

@@ -14,7 +14,6 @@ public class PlayerStats : BaseHealth
 
 	public override void Die()
 	{
-		// TODO:
-		//GetComponent<Player>().Die();
+		Player.instance.Die();
 	}
 }
