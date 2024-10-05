@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
 	// Buffered input.
 	private Vector3 input;
 	private bool doJump;
+	private bool mouse1Down, mouse1Up;
+	private bool mouse2Down;
 
 	private Holdable holdable;
 
@@ -49,6 +51,9 @@ public class Player : MonoBehaviour
 		input.x = Input.GetAxisRaw("Horizontal");
 		input.z = Input.GetAxisRaw("Vertical");
 		doJump |= Input.GetKeyDown(KeyCode.Space);
+		mouse1Down |= Input.GetMouseButtonDown(0);
+		mouse1Up |= Input.GetMouseButtonUp(0);
+		mouse2Down |= Input.GetMouseButtonDown(1);
 	}
 
 	private void FixedUpdate()
@@ -62,17 +67,16 @@ public class Player : MonoBehaviour
 		if (holdable != null)
 		{
 			// Holding something.
-			// TODO: Probably need to buffer mouse input to avoid missed input.
-			if (Input.GetMouseButtonDown(1))
+			if (mouse2Down)
 			{
 				DropHoldable();
 			}
 			// Try to use the holdable.
-			else if (Input.GetMouseButtonDown(0))
+			else if (mouse1Down)
 			{
 				holdable.OnUse(true);
 			}
-			else if (Input.GetMouseButtonUp(0))
+			else if (mouse1Up)
 			{
 				holdable.OnUse(false);
 			}
@@ -80,7 +84,7 @@ public class Player : MonoBehaviour
 		else
 		{
 			// Not holding anything.
-			if (Input.GetMouseButtonDown(0))
+			if (mouse1Down)
 			{
 				// Look for a holdable pickup.
 				// TODO: Better casting.
@@ -120,7 +124,6 @@ public class Player : MonoBehaviour
 			velocity.y += jumpPower;
 			animator.Play("Jump");
 		}
-		doJump = false;
 
 		// Apply gravity.
 		velocity += gravity;
@@ -138,6 +141,13 @@ public class Player : MonoBehaviour
 		// Update animator.
 		animator.SetFloat("xVelocity", velocity.x);
 		animator.SetFloat("zVelocity", velocity.z);
+
+		// Clear buffered input.
+		input = Vector3.zero;
+		doJump = false;
+		mouse1Down = false;
+		mouse1Up = false;
+		mouse2Down = false;
 	}
 
 	/// <summary>
