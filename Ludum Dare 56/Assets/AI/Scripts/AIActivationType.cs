@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class AIActivationType : MonoBehaviour
 {
+	public AiMovement Movement;
+
 	public abstract void Activate();
 
 	public abstract void ActivateUpdate();

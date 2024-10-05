@@ -45,6 +45,11 @@ public class AiMovement : MonoBehaviour
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
+	private void Awake()
+	{
+		activationItem.Movement = this;
+	}
+
 	private void Update()
 	{
 		switch (CurrentState)

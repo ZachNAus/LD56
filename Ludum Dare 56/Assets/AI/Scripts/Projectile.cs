@@ -30,7 +30,11 @@ public class Projectile : MonoBehaviour
 	[ShowIf(nameof(Homing))]
 	[SerializeField] float rotateSpeed = 10;
 
+	public bool ParentProjectile;
+
 	float TimeAlive;
+
+	public IHasHealth Caster { get; set; }
 
 	private void Update()
 	{
@@ -52,9 +56,9 @@ public class Projectile : MonoBehaviour
 				transform.position += transform.forward * moveSpeed * Time.deltaTime;
 				transform.rotation = Quaternion.LookRotation(
 					Vector3.RotateTowards(
-						transform.forward, 
-						PlayerStats.instance.transform.position - transform.position, 
-						rotateSpeed * Time.deltaTime, 
+						transform.forward,
+						PlayerStats.instance.transform.position - transform.position,
+						rotateSpeed * Time.deltaTime,
 						0.0f));
 				break;
 		}
@@ -67,10 +71,13 @@ public class Projectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.TryGetComponent(out IHasHealth health))
+		if (other.TryGetComponent(out IHasHealth health))
 		{
-			health.TakeDamage(damage);
-			DestroyProj();
+			if (Caster != health)
+			{
+				health.TakeDamage(damage);
+				DestroyProj();
+			}
 		}
 	}
 }

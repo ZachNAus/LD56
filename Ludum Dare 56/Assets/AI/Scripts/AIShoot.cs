@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class AIShoot : AIChase
 {
+	public enum ShootCondition
+	{
+		AfterDelay,
+		CloseToPlayer
+	}
+
 	[Header("Shoot")]
-	[SerializeField] GameObject projectileToSummon;
+	[SerializeField] ShootCondition shootingCondition;
+
+	[SerializeField] Projectile projectileToSummon;
 	[SerializeField] Transform spawnPos;
-	
-	[Min(0)][SerializeField] float shootDelay;
+
+	[Space]
+
+	[SerializeField] float stopTimeWhenShooting;
+
+	[Min(0)] [SerializeField] float shootDelay;
 
 	bool CountDown = false;
 	float timeTillNextShoot;
@@ -29,10 +41,25 @@ public class AIShoot : AIChase
 		{
 			timeTillNextShoot -= Time.deltaTime;
 
-			if(timeTillNextShoot <= 0)
+			switch (shootingCondition)
 			{
-				Shoot();
-				timeTillNextShoot = shootDelay;
+				case ShootCondition.AfterDelay:
+					if (timeTillNextShoot <= 0)
+					{
+						Shoot();
+						timeTillNextShoot = shootDelay;
+					}
+					break;
+				case ShootCondition.CloseToPlayer:
+					if (timeTillNextShoot <= 0)
+					{
+						if ((PlayerStats.instance.transform.position - transform.position).sqrMagnitude < 9/*3x3*/)
+						{
+							Shoot();
+							timeTillNextShoot = shootDelay;
+						}
+					}
+					break;
 			}
 		}
 	}
@@ -45,7 +72,7 @@ public class AIShoot : AIChase
 	}
 	public override void Stun()
 	{
-		base.Stun(); 
+		base.Stun();
 		CountDown = false;
 	}
 	public override void StopStun()
@@ -57,7 +84,27 @@ public class AIShoot : AIChase
 	void Shoot()
 	{
 		var proj = Instantiate(projectileToSummon);
+
+		if (proj.ParentProjectile)
+			proj.transform.parent = spawnPos;
+
+		proj.Caster = GetComponent<IHasHealth>();
 		proj.transform.position = spawnPos.position;
 		proj.transform.eulerAngles = spawnPos.eulerAngles;
+
+
+		if(stopTimeWhenShooting > 0)
+		{
+			StopMoving();
+
+			StartCoroutine(PerformActionAfterDelay(stopTimeWhenShooting, StartMoving));
+		}
+	}
+
+	IEnumerator PerformActionAfterDelay(float delay, System.Action action)
+	{
+		yield return new WaitForSeconds(delay);
+
+		action?.Invoke();
 	}
 }
