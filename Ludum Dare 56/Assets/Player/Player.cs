@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
 	private Holdable holdable;
 	private bool isDead;
 
+	// Layer with a mask for the waist up, so we can do sword swing animations etc without affecting running animation.
+	public int AnimatorLayerTorso() => animator.GetLayerIndex("Torso");
 	public Transform ModelRightHand() => RecursiveFindChild(model, "mixamorig:RightHand");
 
 	private void Awake()

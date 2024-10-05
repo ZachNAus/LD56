@@ -18,7 +18,7 @@ public class HoldableNeedleSword : Holdable
 	{
 		if (down)
 		{
-			player.animator.Play("Slash");
+			player.animator.Play("Slash", player.animator.GetLayerIndex("Torso"));
 			// TODO: Damage, etc.
 			// TODO: Disallow while jumping?
 		}
