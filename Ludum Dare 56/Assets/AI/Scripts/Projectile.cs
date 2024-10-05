@@ -21,6 +21,10 @@ public class Projectile : MonoBehaviour
 
 	[SerializeField] float moveSpeed = 5;
 
+	[Space]
+
+	[SerializeField] float damage = 10;
+
 	[Header("Other")]
 
 	[ShowIf(nameof(Homing))]
@@ -59,5 +63,14 @@ public class Projectile : MonoBehaviour
 	public void DestroyProj()
 	{
 		Destroy(gameObject);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.TryGetComponent(out IHasHealth health))
+		{
+			health.TakeDamage(damage);
+			DestroyProj();
+		}
 	}
 }

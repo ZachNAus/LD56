@@ -61,6 +61,8 @@ public class AiMovement : MonoBehaviour
 
 				if(StunnedDuration <= 0)
 				{
+					activationItem.StopStun();
+
 					CurrentState = beforeState;
 				}
 				break;
@@ -114,7 +116,11 @@ public class AiMovement : MonoBehaviour
 	public void Stun(float duration = 1)
 	{
 		if (CurrentState != State.Stunned)
+		{
 			beforeState = CurrentState;
+
+			activationItem.Stun();
+		}
 
 		StunnedDuration += duration;
 		CurrentState = State.Stunned;

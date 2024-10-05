@@ -53,7 +53,7 @@ public class AIChase : AIActivationType
 	bool movingForward;
 	IEnumerator Co_Chase()
 	{
-		var wait = new WaitForSeconds(1);
+		var wait = new WaitForSeconds(0.1f);
 		agent.isStopped = false;
 
 		while (true)
