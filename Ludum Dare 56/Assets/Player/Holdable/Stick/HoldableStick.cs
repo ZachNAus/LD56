@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class HoldableStick : Holdable
 {
-	public Hitbox hitbox;
+	public SetActiveDuration hitbox;
 	public Transform model;
 
 	private Coroutine attackingRoutine;
 
 	private void Awake()
 	{
-		hitbox.onEnter += c =>
-		{
-			if (IHittable.IsHittable(c.gameObject, out var hittable))
-			{
-				hittable.OnHit(this);
-			}
-		};
+		// hitbox.onEnter += c =>
+		// {
+		// 	if (IHittable.IsHittable(c.gameObject, out var hittable))
+		// 	{
+		// 		hittable.OnHit(this);
+		// 	}
+		// };
 	}
 
 	private void OnDisable()

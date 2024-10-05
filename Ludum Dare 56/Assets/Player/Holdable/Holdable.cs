@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Something that the player holds.
 /// </summary>
-public abstract class Holdable : MonoBehaviour
+public class Holdable : MonoBehaviour
 {
 	[NonSerialized] public Player player;
 	[Tooltip("If set, the holdable will be dropable, and this will be spawned.")]

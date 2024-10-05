@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
 
 	// Other.
 	private Holdable holdable;
+	[Tooltip("A holdable that we will spawn with.")]
+	public Holdable defaultHoldable;
 
 	// Layer with a mask for the waist up, so we can do sword swing animations etc without affecting running animation.
 	public int AnimatorLayerTorso() => animator.GetLayerIndex("Torso");
@@ -65,9 +67,11 @@ public class Player : MonoBehaviour
 
 	private void Start()
 	{
-		// Temporary.
 		SetState(PlayerState.Normal);
-		SetHoldable(GetComponentInChildren<Holdable>());
+		if (defaultHoldable != null)
+		{
+			SetHoldable(Instantiate(defaultHoldable));
+		}
 	}
 
 	private void Update()

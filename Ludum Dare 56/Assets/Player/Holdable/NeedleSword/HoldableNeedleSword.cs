@@ -3,6 +3,7 @@ using UnityEngine;
 public class HoldableNeedleSword : Holdable
 {
 	public Transform model;
+	public SetActiveDuration hitbox;
 
 	public override void OnEnter()
 	{
@@ -20,8 +21,17 @@ public class HoldableNeedleSword : Holdable
 		{
 			// TODO: Cooldown, wait until we can swing again.
 			player.PlayTorso("Slash");
+			hitbox.Show();
 			// TODO: Damage, etc.
 			// TODO: Disallow while jumping?
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.TryGetComponent<IHasHealth>(out var h))
+		{
+			h.TakeDamage(1);
 		}
 	}
 }
