@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
 	public CharacterController controller;
 	public GameObject playerCamera;
 	public Transform model;
+	public Animator animator;
 
 	[Tooltip("Move speed in units per second")]
 	public float moveSpeed;
@@ -84,15 +86,16 @@ public class Player : MonoBehaviour
 				}
 			}
 		}
-
-		if (Input.GetKeyDown(KeyCode.G))
-		{
-			PlayerStats.instance.TakeDamage(1);
-		}
 	}
 
 	private void FixedUpdate()
 	{
+		// Debug hotkey.
+		if (Input.GetKeyDown(KeyCode.G))
+		{
+			PlayerStats.instance.TakeDamage(1);
+		}
+
 		// Apply lateral movement (side and forwards).
 		var moveDir = new Vector3(input.x, 0, input.z);
 		// Move relative to the camera.
@@ -111,6 +114,7 @@ public class Player : MonoBehaviour
 		if (doJump && velocity.y <= 0f && IsGrounded())
 		{
 			velocity.y += jumpPower;
+			animator.Play("Jump");
 		}
 		doJump = false;
 
@@ -126,6 +130,10 @@ public class Player : MonoBehaviour
 		{
 			velocity.x = velocity.y = 0;
 		}
+
+		// Update animator.
+		animator.SetFloat("xVelocity", velocity.x);
+		animator.SetFloat("zVelocity", velocity.z);
 	}
 
 	/// <summary>
