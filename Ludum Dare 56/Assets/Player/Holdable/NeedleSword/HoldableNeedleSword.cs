@@ -18,7 +18,8 @@ public class HoldableNeedleSword : Holdable
 	{
 		if (down)
 		{
-			player.animator.Play("Slash", player.animator.GetLayerIndex("Torso"));
+			// TODO: Cooldown, wait until we can swing again.
+			player.PlayTorso("Slash");
 			// TODO: Damage, etc.
 			// TODO: Disallow while jumping?
 		}
