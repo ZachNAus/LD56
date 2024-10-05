@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -27,8 +28,11 @@ public class Player : MonoBehaviour
 	private bool doJump;
 	private bool mouse1Down, mouse1Up;
 	private bool mouse2Down;
+	private bool keyGDown;
 
+	// Other.
 	private Holdable holdable;
+	private bool isDead;
 
 	private void Awake()
 	{
@@ -54,75 +58,84 @@ public class Player : MonoBehaviour
 		mouse1Down |= Input.GetMouseButtonDown(0);
 		mouse1Up |= Input.GetMouseButtonUp(0);
 		mouse2Down |= Input.GetMouseButtonDown(1);
+		keyGDown |= Input.GetKeyDown(KeyCode.G);
 	}
 
 	private void FixedUpdate()
 	{
 		// Debug hotkey.
-		if (Input.GetKeyDown(KeyCode.G))
+		if (keyGDown)
 		{
 			PlayerStats.instance.TakeDamage(1);
 		}
 
-		if (holdable != null)
+		if (isDead)
 		{
-			// Holding something.
-			if (mouse2Down)
-			{
-				DropHoldable();
-			}
-			// Try to use the holdable.
-			else if (mouse1Down)
-			{
-				holdable.OnUse(true);
-			}
-			else if (mouse1Up)
-			{
-				holdable.OnUse(false);
-			}
+			// Dead state.
 		}
 		else
 		{
-			// Not holding anything.
-			if (mouse1Down)
+			// Normal/regular state.
+			if (holdable != null)
 			{
-				// Look for a holdable pickup.
-				// TODO: Better casting.
-				var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
-				foreach (var c in cast)
+				// Holding something.
+				if (mouse2Down)
 				{
-					var pickup = c.transform.GetComponentInParent<Pickup>();
-					var hold = pickup?.Pick();
-					if (hold != null)
+					DropHoldable();
+				}
+				// Try to use the holdable.
+				else if (mouse1Down)
+				{
+					holdable.OnUse(true);
+				}
+				else if (mouse1Up)
+				{
+					holdable.OnUse(false);
+				}
+			}
+			else
+			{
+				// Not holding anything.
+				if (mouse1Down)
+				{
+					// Look for a holdable pickup.
+					// TODO: Better casting.
+					var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
+					foreach (var c in cast)
 					{
-						// Found something to hold.
-						Destroy(pickup.gameObject);
-						SetHoldable(hold);
-						break;
+						var pickup = c.transform.GetComponentInParent<Pickup>();
+						var hold = pickup?.Pick();
+						if (hold != null)
+						{
+							// Found something to hold.
+							Destroy(pickup.gameObject);
+							SetHoldable(hold);
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		// Apply lateral movement (side and forwards).
-		var moveDir = new Vector3(input.x, 0, input.z);
-		// Move relative to the camera.
-		moveDir = playerCamera.transform.TransformDirection(moveDir);
-		moveDir.y = 0;
-		moveDir.Normalize();
-		velocity.x = moveDir.x * moveSpeed;
-		velocity.z = moveDir.z * moveSpeed;
-		if (moveDir.sqrMagnitude != 0)
-		{
-			// Rotate player to direction of camera.
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
-		}
+			// Apply lateral movement (side and forwards).
+			var moveDir = new Vector3(input.x, 0, input.z);
+			// Move relative to the camera.
+			moveDir = playerCamera.transform.TransformDirection(moveDir);
+			moveDir.y = 0;
+			moveDir.Normalize();
+			velocity.x = moveDir.x * moveSpeed;
+			velocity.z = moveDir.z * moveSpeed;
+			if (moveDir.sqrMagnitude != 0)
+			{
+				// Rotate player to direction of camera.
+				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
+			}
 
-		// Apply jumping.
-		if (doJump && velocity.y <= 0f && IsGrounded())
-		{
-			velocity.y += jumpPower;
-			animator.Play("Jump");
+			// Apply jumping.
+			if (doJump && velocity.y <= 0f && IsGrounded())
+			{
+				velocity.y += jumpPower;
+				animator.Play("Jump");
+			}
 		}
 
 		// Apply gravity.
@@ -148,6 +161,7 @@ public class Player : MonoBehaviour
 		mouse1Down = false;
 		mouse1Up = false;
 		mouse2Down = false;
+		keyGDown = false;
 	}
 
 	/// <summary>
@@ -179,6 +193,19 @@ public class Player : MonoBehaviour
 		}
 		holdable = h;
 		holdable?.OnEnter();
+	}
+
+	/// <summary>
+	/// Only PlayerStats should call this.
+	/// </summary>
+	public void Die()
+	{
+		if (!isDead)
+		{
+			isDead = true;
+			velocity.x = velocity.z = 0;
+			animator.Play("Die");
+		}
 	}
 
 	public static bool IsPlayer(GameObject collision)
