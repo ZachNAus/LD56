@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerStats : BaseHealth
 {
     public static PlayerStats instance;
@@ -12,8 +8,15 @@ public class PlayerStats : BaseHealth
 		instance = this;
 	}
 
+	public override void TakeDamage(float damage)
+	{
+		float res = Player.instance.TakeDamage(damage);
+		base.TakeDamage(res);
+	}
+
 	public override void Die()
 	{
 		Player.instance.Die();
+		base.Die();
 	}
 }

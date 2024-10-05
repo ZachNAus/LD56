@@ -264,6 +264,16 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public virtual float TakeDamage(float damage)
+	{
+		if (state == PlayerState.Blocking)
+		{
+			animator.Play("BlockImpact");
+			return 0;
+		}
+		return damage;
+	}
+
 	/// <summary>
 	/// Returns true if the player is on the ground.
 	/// </summary>
