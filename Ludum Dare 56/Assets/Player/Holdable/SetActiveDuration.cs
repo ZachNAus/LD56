@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -11,30 +13,50 @@ public class SetActiveDuration : MonoBehaviour
 
 	public Coroutine routine;
 
+	public bool IsPlaying => routine != null;
+
 	private void Awake()
 	{
 		if (go) go.SetActive(false);
 	}
 
+	private void OnDisable()
+	{
+		Stop();
+	}
+
 	public void Show()
 	{
-		StopRoutine();
+		Stop();
 		if (go != null)
 		{
-			routine = GameObjectUtilities.SetActive(go, duration, delay, this);
+			routine = StartCoroutine(Routine());
+		}
+
+		IEnumerator Routine()
+		{
+			if (delay > 0)
+			{
+				go.SetActive(false);
+				yield return new WaitForSeconds(delay);
+			}
+			go.SetActive(true);
+			yield return new WaitForSeconds(duration);
+			go.SetActive(false);
+			routine = null;
 		}
 	}
 
 	public void Hide()
 	{
-		StopRoutine();
+		Stop();
 		if (go != null)
 		{
 			go.SetActive(false);
 		}
 	}
 
-	private void StopRoutine()
+	private void Stop()
 	{
 		if (routine != null)
 		{

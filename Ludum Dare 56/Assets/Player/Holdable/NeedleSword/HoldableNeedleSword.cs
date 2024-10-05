@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
 public class HoldableNeedleSword : Holdable
 {
 	public Transform model;
 	public SetActiveDuration hitbox;
+	public float cooldown;
+
+	private float swingTime;
 
 	public override void OnEnter()
 	{
@@ -17,12 +21,11 @@ public class HoldableNeedleSword : Holdable
 
 	public override void OnUse(bool down)
 	{
-		if (down)
+		if (down && (Time.time - swingTime) >= cooldown)
 		{
-			// TODO: Cooldown, wait until we can swing again.
+			swingTime = Time.time;
 			player.PlayTorso("Slash");
 			hitbox.Show();
-			// TODO: Damage, etc.
 			// TODO: Disallow while jumping?
 		}
 	}
@@ -31,7 +34,8 @@ public class HoldableNeedleSword : Holdable
 	{
 		if (other.TryGetComponent<IHasHealth>(out var h))
 		{
-			h.TakeDamage(1);
+			// TODO: Pass the player here instead?
+			h.TakeDamage(1, transform, true);
 		}
 	}
 }
