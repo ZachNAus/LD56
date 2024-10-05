@@ -46,6 +46,10 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] BaseHealth health;
 
+	[Space]
+
+	[SerializeField] Vector3 knockBackOffset = new Vector3(0,1,0);
+
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
@@ -165,7 +169,7 @@ public class AiMovement : MonoBehaviour
 			//	endPosition = hit.position;
 			//}
 
-			transform.DOJump(endPosition, 1, 2, 1);
+			transform.DOJump(endPosition + knockBackOffset, 1, 2, 1);
 		}
 	}
 
