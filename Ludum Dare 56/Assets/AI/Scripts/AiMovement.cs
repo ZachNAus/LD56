@@ -64,7 +64,7 @@ public class AiMovement : MonoBehaviour
 			case State.Stunned:
 				StunnedDuration -= Time.deltaTime;
 
-				if(StunnedDuration <= 0)
+				if (StunnedDuration <= 0)
 				{
 					activationItem.StopStun();
 
@@ -76,17 +76,25 @@ public class AiMovement : MonoBehaviour
 
 	void TryActivate()
 	{
+		if (PlayerStats.instance.IsDead)
+			return;
+
 		switch (activationType)
 		{
 			case ActivationType.PlayerWithinRange:
 				var distToPlayer = (PlayerStats.instance.transform.position - transform.position).sqrMagnitude;
-				if(distToPlayer < activateRange * activateRange)
+				if (distToPlayer < activateRange * activateRange)
 					Activate();
 				break;
 		}
 	}
 	void TryDeactivate()
 	{
+		if (PlayerStats.instance.IsDead)
+		{
+			Deactivate();
+		}
+
 		switch (deactivationType)
 		{
 			case DeactivationType.PlayerOutOfRange:
