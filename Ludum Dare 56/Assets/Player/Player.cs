@@ -139,7 +139,8 @@ public class Player : MonoBehaviour
 			case PlayerState.Blocking:
 			{
 				animator.Play("BlockEnd");
-				shieldBack.SetActive(true);
+				shieldBack.transform.DOKill();
+				shieldBack.transform.DOScale(1f, 0.25f);
 				shieldHeld.transform.DOKill();
 				shieldHeld.transform.DOScale(0f, 0.25f);
 			} break;
@@ -163,7 +164,8 @@ public class Player : MonoBehaviour
 			{
 				animator.SetLayerWeight(AnimatorLayerTorso(), 0);
 				velocity.x = velocity.z = 0;
-				shieldBack.gameObject.SetActive(false);
+				shieldBack.transform.DOKill();
+				shieldBack.transform.localScale = Vector3.zero;
 				shieldHeld.transform.DOKill();
 				shieldHeld.transform.DOScale(1.3f, 0.25f);
 				// TODO: Hide holdable?
