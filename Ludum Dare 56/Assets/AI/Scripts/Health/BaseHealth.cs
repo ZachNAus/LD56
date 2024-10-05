@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 
 	[SerializeField] Image healthBar;
 
-	public UnityEvent OnTakedamage;
+	public UnityEvent<Transform, bool> OnTakedamage;
 	public UnityEvent onDeath;
 
 	public float MaxHealth => maxHealth;
@@ -28,7 +29,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 			healthBar.fillAmount = CurrentHealth / MaxHealth;
 	}
 
-	public virtual void TakeDamage(float damage)
+	[Button]
+	public virtual void TakeDamage(float damage, Transform source, bool doKnockback)
 	{
 		if (IsDead || damage == 0) return;
 
@@ -38,7 +40,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 		if (healthBar)
 			healthBar.fillAmount = CurrentHealth / MaxHealth;
 
-		OnTakedamage?.Invoke();
+		OnTakedamage?.Invoke(source, doKnockback);
 
 		if (IsDead)
 			Die();

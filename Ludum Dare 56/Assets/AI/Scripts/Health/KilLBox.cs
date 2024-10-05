@@ -8,7 +8,7 @@ public class KilLBox : MonoBehaviour
 	{
 		if(other.TryGetComponent(out IHasHealth h))
 		{
-			h.TakeDamage(100000);
+			h.TakeDamage(100000, transform, false);
 		}
 	}
 }

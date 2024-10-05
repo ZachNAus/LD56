@@ -1,7 +1,9 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AiMovement : MonoBehaviour
 {
@@ -42,12 +44,16 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] AIActivationType activationItem;
 
+	[SerializeField] BaseHealth health;
+
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
 	private void Awake()
 	{
 		activationItem.Movement = this;
+
+		health.OnTakedamage.AddListener(Stun);
 	}
 
 	private void Update()
@@ -126,7 +132,7 @@ public class AiMovement : MonoBehaviour
 	}
 
 	[Button]
-	public void Stun(float duration = 1)
+	public void Stun(Transform source, bool doKnockback)
 	{
 		if (CurrentState != State.Stunned)
 		{
@@ -135,7 +141,33 @@ public class AiMovement : MonoBehaviour
 			activationItem.Stun();
 		}
 
-		StunnedDuration += duration;
+		StunnedDuration += 1.5f;
 		CurrentState = State.Stunned;
+
+
+		if (doKnockback)
+		{
+			var dir = (source.position - transform.position).normalized;
+
+			dir.y = 0;
+
+			RaycastHit rayHit;
+
+			var endPosition = transform.position + (dir * -3);
+
+			if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit))
+			{
+				endPosition = rayHit.point;
+			}
+
+			//if (NavMesh.SamplePosition(endPosition, out var hit, 10, -1))
+			//{
+			//	endPosition = hit.position;
+			//}
+
+			transform.DOJump(endPosition, 1, 2, 1);
+		}
 	}
+
+
 }

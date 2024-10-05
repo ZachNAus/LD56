@@ -279,6 +279,7 @@ MonoBehaviour:
   deactivationType: 1
   deactivateRange: 20
   activationItem: {fileID: 7678249926429808980}
+  health: {fileID: 1346298416404595423}
 --- !u!195 &1165427860638864103
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -321,7 +322,7 @@ MonoBehaviour:
       - m_Target: {fileID: 958832219146620498}
         m_TargetAssemblyTypeName: AiMovement, Assembly-CSharp
         m_MethodName: Stun
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

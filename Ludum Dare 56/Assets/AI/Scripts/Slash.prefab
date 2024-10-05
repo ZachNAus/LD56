@@ -122,5 +122,6 @@ MonoBehaviour:
   lifeTime: 0.3
   moveSpeed: 0
   damage: 10
+  doKnockback: 1
   rotateSpeed: 10
   ParentProjectile: 1
