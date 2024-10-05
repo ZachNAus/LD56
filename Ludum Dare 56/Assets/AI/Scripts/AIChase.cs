@@ -58,7 +58,8 @@ public class AIChase : AIActivationType
 
 		while (true)
 		{
-			movingForward = (PlayerStats.instance.transform.position - transform.position).sqrMagnitude > preferredDistance * preferredDistance;
+			var distSquared = (PlayerStats.instance.transform.position - transform.position).sqrMagnitude;
+			movingForward = distSquared > preferredDistance * preferredDistance;
 			if (movingForward)
 			{
 				agent.updateRotation = true;
@@ -67,15 +68,21 @@ public class AIChase : AIActivationType
 			}
 			else
 			{
-				//Back up
-				var dir = (PlayerStats.instance.transform.position - transform.position).normalized;
+				if(distSquared < (preferredDistance - 3) * (preferredDistance - 3))
+				{
+					//Back up
+					var dir = (PlayerStats.instance.transform.position - transform.position).normalized;
 
-				var endPos = transform.position + dir * -10;
+					var endPos = transform.position + dir * -10;
 
-				agent.updateRotation = false;
+					agent.updateRotation = false;
 
-				agent.SetDestination(endPos);
-
+					agent.SetDestination(endPos);
+				}
+				else
+				{
+					agent.SetDestination(transform.position);
+				}
 			}
 
 			yield return wait;
