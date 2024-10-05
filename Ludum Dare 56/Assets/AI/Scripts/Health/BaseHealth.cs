@@ -11,11 +11,14 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	[SerializeField] Image healthBar;
 
 	public UnityEvent OnTakedamage;
+	public UnityEvent onDeath;
 
 	public float MaxHealth => maxHealth;
 	public float CurrentHealth { get; private set; }
 
 	public bool IsDead => CurrentHealth <= 0;
+
+	public UnityEvent OnDeath => onDeath;
 
 	protected virtual void Awake()
 	{
@@ -43,5 +46,6 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 
 	public virtual void Die()
 	{
+		OnDeath?.Invoke();
 	}
 }
