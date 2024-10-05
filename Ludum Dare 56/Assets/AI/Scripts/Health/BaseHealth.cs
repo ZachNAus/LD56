@@ -27,8 +27,11 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 
 	public virtual void TakeDamage(float damage)
 	{
+		if (IsDead) return;
+
 		CurrentHealth -= damage;
-		
+		CurrentHealth = Mathf.Max(0, CurrentHealth);
+
 		if (healthBar)
 			healthBar.fillAmount = CurrentHealth / MaxHealth;
 

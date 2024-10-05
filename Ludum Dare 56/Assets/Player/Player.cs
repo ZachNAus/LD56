@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public static Player instance;
+
 	public CharacterController controller;
 	public GameObject playerCamera;
 	public Transform model;
@@ -20,6 +22,16 @@ public class Player : MonoBehaviour
 	public bool doJump;
 
 	private Holdable holdable;
+
+	private void Awake()
+	{
+		instance = this;
+	}
+
+	private void OnDestroy()
+	{
+		instance = null;
+	}
 
 	private void Start()
 	{
@@ -71,6 +83,11 @@ public class Player : MonoBehaviour
 					}
 				}
 			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.G))
+		{
+			PlayerStats.instance.TakeDamage(1);
 		}
 	}
 
