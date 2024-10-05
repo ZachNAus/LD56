@@ -9,7 +9,7 @@ public interface IHasHealth
 	public float CurrentHealth { get; }
 	public UnityEvent OnDeath { get; }
 
-	public void TakeDamage(float damage);
+	public void TakeDamage(float damage,Transform source, bool doKnockback);
 
 	public void Die();
 

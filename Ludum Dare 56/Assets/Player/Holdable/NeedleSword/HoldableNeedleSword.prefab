@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.5
-  delay: 0.1
+  delay: 0.25
   go: {fileID: 2806373908990137509}
 --- !u!54 &932587628164401223
 Rigidbody:

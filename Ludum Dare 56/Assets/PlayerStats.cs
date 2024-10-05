@@ -8,10 +8,10 @@ public class PlayerStats : BaseHealth
 		instance = this;
 	}
 
-	public override void TakeDamage(float damage)
+	public override void TakeDamage(float damage, UnityEngine.Transform source, bool doKnockback)
 	{
 		float res = Player.instance.TakeDamage(damage);
-		base.TakeDamage(res);
+		base.TakeDamage(res, source, doKnockback);
 	}
 
 	public override void Die()

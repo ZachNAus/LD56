@@ -43,7 +43,7 @@ public class AIChase : AIActivationType
 
 	protected void StopMoving()
 	{
-		agent.isStopped = true;
+		agent.enabled = false;
 
 		if (chaseRoutine != null)
 			StopCoroutine(chaseRoutine);
@@ -57,7 +57,7 @@ public class AIChase : AIActivationType
 	IEnumerator Co_Chase()
 	{
 		var wait = new WaitForSeconds(0.1f);
-		agent.isStopped = false;
+		agent.enabled = true;
 
 		while (true)
 		{

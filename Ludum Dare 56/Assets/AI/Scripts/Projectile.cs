@@ -27,6 +27,8 @@ public class Projectile : MonoBehaviour
 
 	[Header("Other")]
 
+	[SerializeField] bool doKnockback;
+
 	[ShowIf(nameof(Homing))]
 	[SerializeField] float rotateSpeed = 10;
 
@@ -75,7 +77,7 @@ public class Projectile : MonoBehaviour
 		{
 			if (Caster != health)
 			{
-				health.TakeDamage(damage);
+				health.TakeDamage(damage, transform, doKnockback);
 				DestroyProj();
 			}
 		}

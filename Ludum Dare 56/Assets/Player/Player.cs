@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
 		// Debug hotkey.
 		if (keyGDown)
 		{
-			PlayerStats.instance.TakeDamage(1);
+			PlayerStats.instance.TakeDamage(1, transform, false);
 		}
 
 		OnStateUpdate();
