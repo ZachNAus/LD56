@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+using DG.Tweening;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,6 +10,8 @@ public class Player : MonoBehaviour
 	public GameObject playerCamera;
 	public Transform model;
 	public Animator animator;
+	public GameObject shieldBack; // Shield that appears in our back when we're not blocking.
+	public GameObject shieldHeld; // Shield that appears when we are blocking.
 
 	[Header("Tweakable values")]
 	[Tooltip("Move speed in units per second.")]
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
 	public Vector3 velocity;
 	[Tooltip("Gravity in units per second.")]
 	public Vector3 gravity;
+	public KeyCode blockKey;
 
 	// Buffered input.
 	private Vector3 input;
@@ -30,17 +31,26 @@ public class Player : MonoBehaviour
 	private bool mouse2Down;
 	private bool keyGDown;
 
+	// State.
+	public bool isDead; // True if we are dead.
+	public bool isBlocking; // True if we are in the blocking state, i.e. our shield is out.
+
 	// Other.
 	private Holdable holdable;
-	private bool isDead;
 
 	// Layer with a mask for the waist up, so we can do sword swing animations etc without affecting running animation.
 	public int AnimatorLayerTorso() => animator.GetLayerIndex("Torso");
 	public Transform ModelRightHand() => RecursiveFindChild(model, "mixamorig:RightHand");
+	public void PlayTorso(string animationName)
+	{
+		animator.SetLayerWeight(AnimatorLayerTorso(), 1);
+		animator.Play(animationName, AnimatorLayerTorso());
+	}
 
 	private void Awake()
 	{
 		instance = this;
+		shieldHeld.transform.localScale = Vector3.zero;
 	}
 
 	private void OnDestroy()
@@ -76,6 +86,20 @@ public class Player : MonoBehaviour
 		if (isDead)
 		{
 			// Dead state.
+		}
+		else if (isBlocking)
+		{
+			// Blocking state.
+			if (!Input.GetKey(blockKey))
+			{
+				// TODO: Go back to normal.
+				isBlocking = false;
+				animator.Play("BlockEnd");
+				// TODO: Move to some on state enter/exit. Do this when going to dead state too.
+				shieldBack.SetActive(true);
+				shieldHeld.transform.DOKill();
+				shieldHeld.transform.DOScale(0f, 0.25f);
+			}
 		}
 		else
 		{
@@ -135,10 +159,25 @@ public class Player : MonoBehaviour
 			}
 
 			// Apply jumping.
-			if (doJump && velocity.y <= 0f && IsGrounded())
+			if (IsGrounded())
 			{
-				velocity.y += jumpPower;
-				animator.Play("Jump");
+				if (doJump && velocity.y <= 0f)
+				{
+					velocity.y += jumpPower;
+					animator.Play("Jump");
+				}
+				else if (Input.GetKey(blockKey))
+				{
+					// TODO: Have some way for holdables to prevent transitioning to block state?
+					isBlocking = true;
+					animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+					velocity.x = velocity.z = 0;
+					shieldBack.gameObject.SetActive(false);
+					shieldHeld.transform.DOKill();
+					shieldHeld.transform.DOScale(1.3f, 0.25f);
+					// TODO: Hide holdable?
+					animator.Play("Block");
+				}
 			}
 		}
 
