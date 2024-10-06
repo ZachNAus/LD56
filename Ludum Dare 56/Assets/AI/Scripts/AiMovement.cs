@@ -194,6 +194,9 @@ public class AiMovement : MonoBehaviour
 		inst.transform.position = transform.position;
 		Destroy(inst, 5);
 
+		//var dir = (PlayerStats.instance.transform.position - transform.position).normalized;
+
+		transform.DORotate(new Vector3(-720, 0, 0), 1, RotateMode.LocalAxisAdd);
 		Destroy(gameObject, 1);
 	}
 }
