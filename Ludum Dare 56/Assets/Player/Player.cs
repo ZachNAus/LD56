@@ -295,6 +295,7 @@ public class Player : MonoBehaviour
 				return 0;
 			}
 		}
+		PlayTorso("Hit");
 		return damage;
 	}
 
