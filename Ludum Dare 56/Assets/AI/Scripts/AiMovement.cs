@@ -191,11 +191,12 @@ public class AiMovement : MonoBehaviour
 		//	endPosition = hit.position;
 		//}
 
-		transform.DOJump(endPosition + knockBackOffset, 0.8f, 1, 1);
+		transform.DOJump(endPosition + knockBackOffset, 0.3f, 1, 1);
 	}
 
 	void Die()
 	{
+		//var dir = (transform.position - PlayerStats.instance.transform.position).normalized;
 		transform.DORotate(new Vector3(-720, 0, 0), 0.8f, RotateMode.LocalAxisAdd).OnComplete(() =>
 		{
 			var inst = Instantiate(deathParticles);
