@@ -16,7 +16,9 @@ public class PlayerStats : BaseHealth
 
 		if(res > 0)
 		{
-			UnityEngine.Camera.main.DOShakePosition(0.5f);
+			//UnityEngine.Camera.main.DOShakePosition(0.5f);
+
+			healthBar.transform.DOShakePosition(0.5f, 50);
 		}
 
 		base.TakeDamage(res, source, doKnockback);

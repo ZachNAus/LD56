@@ -9,7 +9,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 {
 	[SerializeField] float maxHealth;
 
-	[SerializeField] Image healthBar;
+	[SerializeField] protected Image healthBar;
 
 	public UnityEvent<Transform, bool> OnTakedamage;
 	public UnityEvent onDeath;
