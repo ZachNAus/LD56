@@ -50,6 +50,8 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] Vector3 knockBackOffset = new Vector3(0,1,0);
 
+	[SerializeField] GameObject deathParticles;
+
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
@@ -58,6 +60,7 @@ public class AiMovement : MonoBehaviour
 		activationItem.Movement = this;
 
 		health.OnTakedamage.AddListener(Stun);
+		health.OnDeath.AddListener(Die);
 	}
 
 	private void Update()
@@ -86,7 +89,7 @@ public class AiMovement : MonoBehaviour
 
 	void TryActivate()
 	{
-		if (PlayerStats.instance.IsDead)
+		if (PlayerStats.instance.IsDead || health.IsDead)
 			return;
 
 		switch (activationType)
@@ -100,7 +103,7 @@ public class AiMovement : MonoBehaviour
 	}
 	void TryDeactivate()
 	{
-		if (PlayerStats.instance.IsDead)
+		if (PlayerStats.instance.IsDead || health.IsDead)
 		{
 			Deactivate();
 		}
@@ -151,27 +154,39 @@ public class AiMovement : MonoBehaviour
 
 		if (doKnockback)
 		{
-			var dir = (source.position - transform.position).normalized;
-
-			dir.y = 0;
-
-			RaycastHit rayHit;
-
-			var endPosition = transform.position + (dir * -3);
-
-			if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit))
-			{
-				endPosition = rayHit.point;
-			}
-
-			//if (NavMesh.SamplePosition(endPosition, out var hit, 10, -1))
-			//{
-			//	endPosition = hit.position;
-			//}
-
-			transform.DOJump(endPosition + knockBackOffset, 1, 2, 1);
+			DoKnockback(source);
 		}
 	}
 
+	void DoKnockback(Transform source)
+	{
+		var dir = (source.position - transform.position).normalized;
 
+		dir.y = 0;
+
+		RaycastHit rayHit;
+
+		var endPosition = transform.position + (dir * -3);
+
+		if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit))
+		{
+			endPosition = rayHit.point;
+		}
+
+		//if (NavMesh.SamplePosition(endPosition, out var hit, 10, -1))
+		//{
+		//	endPosition = hit.position;
+		//}
+
+		transform.DOJump(endPosition + knockBackOffset, 1, 2, 1);
+	}
+
+	void Die()
+	{
+		var inst = Instantiate(deathParticles);
+		inst.transform.position = transform.position;
+		Destroy(inst, 5);
+
+		Destroy(gameObject, 1);
+	}
 }
