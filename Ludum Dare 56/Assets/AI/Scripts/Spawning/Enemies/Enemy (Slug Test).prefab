@@ -235,6 +235,10 @@ MonoBehaviour:
   deathParticles: {fileID: 6248334274763161592, guid: 196825cfbab688842b5dc7826f4b9e6c,
     type: 3}
   dizzyParticles: {fileID: 7022153096164336450}
+  jumpHeight: 0
+  numJumps: 1
+  timeToKnockback: 0.2
+  knockbackDist: 3
 --- !u!114 &1346298416404595423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,19 +255,7 @@ MonoBehaviour:
   healthBar: {fileID: 1001570954863013849}
   OnTakedamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 958832219146620498}
-        m_TargetAssemblyTypeName: AiMovement, Assembly-CSharp
-        m_MethodName: Stun
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDeath:
     m_PersistentCalls:
       m_Calls: []
