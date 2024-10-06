@@ -230,6 +230,7 @@ MonoBehaviour:
   activationItem: {fileID: 7678249926429808980}
   health: {fileID: 1346298416404595423}
   animator: {fileID: 8058081855512684680}
+  mesh: {fileID: 53487087250114723}
   knockBackOffset: {x: 0, y: 1, z: 0}
   deathParticles: {fileID: 6248334274763161592, guid: 196825cfbab688842b5dc7826f4b9e6c,
     type: 3}
@@ -500,6 +501,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 965a9f25f1e16174d935d8be5f5cc20d, type: 3}
+--- !u!137 &53487087250114723 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4467743797283331514, guid: 965a9f25f1e16174d935d8be5f5cc20d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4521221950984033561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4121957034917065458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 965a9f25f1e16174d935d8be5f5cc20d,

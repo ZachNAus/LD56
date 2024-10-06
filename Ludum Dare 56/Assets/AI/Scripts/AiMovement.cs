@@ -48,6 +48,8 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] Animator animator;
 
+	[SerializeField] SkinnedMeshRenderer mesh;
+
 	[Space]
 
 	[SerializeField] Vector3 knockBackOffset = new Vector3(0, 1, 0);
@@ -158,6 +160,8 @@ public class AiMovement : MonoBehaviour
 		StunnedDuration += 1.5f;
 		CurrentState = State.Stunned;
 
+		mesh.material.color = Color.red;
+		StartCoroutine(PerformActionAfterDelay(0.2f, () => mesh.material.color = Color.white));
 
 		if (doKnockback)
 		{
@@ -192,7 +196,7 @@ public class AiMovement : MonoBehaviour
 
 	void Die()
 	{
-		transform.DORotate(new Vector3(-720, 0, 0), 1, RotateMode.LocalAxisAdd).OnComplete(() =>
+		transform.DORotate(new Vector3(-720, 0, 0), 0.8f, RotateMode.LocalAxisAdd).OnComplete(() =>
 		{
 			var inst = Instantiate(deathParticles);
 			inst.transform.position = transform.position;
@@ -200,5 +204,12 @@ public class AiMovement : MonoBehaviour
 
 			Destroy(gameObject);
 		});
+	}
+
+	IEnumerator PerformActionAfterDelay(float delay, System.Action action)
+	{
+		yield return new WaitForSeconds(delay);
+
+		action?.Invoke();
 	}
 }
