@@ -57,6 +57,12 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] GameObject deathParticles;
 	[SerializeField] ParticleSystem dizzyParticles;
 
+	[Header("MIKE ITS HERE")]
+	[Tooltip("0 = no jump")]
+	[SerializeField] float jumpHeight;
+	[SerializeField] int numJumps = 1;
+	[SerializeField] float timeToKnockback = 0.6f;
+
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
@@ -191,7 +197,7 @@ public class AiMovement : MonoBehaviour
 		//	endPosition = hit.position;
 		//}
 
-		transform.DOJump(endPosition + knockBackOffset, 0.6f, 1, 0.6f);
+		transform.DOJump(endPosition + knockBackOffset, jumpHeight, numJumps, timeToKnockback);
 	}
 
 	void Die()
