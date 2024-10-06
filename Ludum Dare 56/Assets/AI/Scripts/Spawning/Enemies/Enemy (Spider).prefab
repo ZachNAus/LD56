@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 4
   healthBar: {fileID: 7153536073491648631}
+  invulnTime: 0.5
   OnTakedamage:
     m_PersistentCalls:
       m_Calls: []

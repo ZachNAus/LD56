@@ -11,6 +11,9 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 
 	[SerializeField] protected Image healthBar;
 
+	[SerializeField] float invulnTime;
+	float timeLastHit;
+
 	public UnityEvent<Transform, bool> OnTakedamage;
 	public UnityEvent onDeath;
 
@@ -33,6 +36,12 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	public virtual void TakeDamage(float damage, Transform source, bool doKnockback)
 	{
 		if (IsDead || damage == 0) return;
+
+		if(Time.time - timeLastHit < invulnTime)
+		{
+			return;
+		}
+		timeLastHit = Time.time;
 
 		CurrentHealth -= damage;
 		CurrentHealth = Mathf.Max(0, CurrentHealth);

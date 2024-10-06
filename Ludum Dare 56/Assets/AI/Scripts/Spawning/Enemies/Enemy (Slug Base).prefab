@@ -239,6 +239,8 @@ MonoBehaviour:
   numJumps: 1
   timeToKnockback: 0.2
   knockbackDist: 3
+  deathType: 0
+  toSpawn: []
 --- !u!114 &1346298416404595423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   healthBar: {fileID: 1001570954863013849}
+  invulnTime: 0.5
   OnTakedamage:
     m_PersistentCalls:
       m_Calls: []

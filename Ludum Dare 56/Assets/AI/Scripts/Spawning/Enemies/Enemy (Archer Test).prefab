@@ -133,6 +133,18 @@ MonoBehaviour:
   deactivationType: 0
   deactivateRange: 30
   activationItem: {fileID: 5075602909891022018}
+  health: {fileID: 0}
+  animator: {fileID: 0}
+  mesh: {fileID: 0}
+  knockBackOffset: {x: 0, y: 1, z: 0}
+  deathParticles: {fileID: 0}
+  dizzyParticles: {fileID: 0}
+  jumpHeight: 0
+  numJumps: 1
+  timeToKnockback: 0.6
+  knockbackDist: 3
+  deathType: 0
+  toSpawn: []
 --- !u!114 &5075602909891022018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +166,7 @@ MonoBehaviour:
   spawnPos: {fileID: 6978033962916542043}
   stopTimeWhenShooting: 0
   shootDelay: 2
+  anim: {fileID: 0}
 --- !u!195 &1761598560551159637
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -190,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 6689390965569265249}
+  invulnTime: 0.5
   OnTakedamage:
     m_PersistentCalls:
       m_Calls:
