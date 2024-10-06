@@ -2378,6 +2378,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spider_Skinned
       objectReference: {fileID: 0}
+    - target: {fileID: 1317743732625315863, guid: 542cf68225f004c49a2fb838c521befb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cc791e72db3b3fe43bcaac86e74859b3, type: 2}
     - target: {fileID: 5866666021909216657, guid: 542cf68225f004c49a2fb838c521befb,
         type: 3}
       propertyPath: m_Controller
