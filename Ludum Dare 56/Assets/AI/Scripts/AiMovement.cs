@@ -189,6 +189,9 @@ public class AiMovement : MonoBehaviour
 
 	public void DoKnockback(Transform source, bool stun)
 	{
+		if (health.IsDead && deathType == DeathType.ExplodeIntoPieces)
+			return;
+
 		if (stun)
 			activationItem.Stun();
 
