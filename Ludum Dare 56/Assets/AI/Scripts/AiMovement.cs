@@ -71,7 +71,13 @@ public class AiMovement : MonoBehaviour
 	{
 		activationItem.Movement = this;
 
-		health.OnTakedamage.AddListener(Stun);
+		health.OnTakedamage.AddListener((t, b) =>
+		{
+			if (b)
+			{
+				DoKnockback(t, true);
+			}
+		});
 		health.OnDeath.AddListener(Die);
 	}
 
@@ -158,8 +164,6 @@ public class AiMovement : MonoBehaviour
 			beforeState = CurrentState;
 
 			activationItem.Stun();
-
-			animator.SetTrigger("Hit");
 		}
 
 		dizzyParticles.Play();
@@ -167,17 +171,22 @@ public class AiMovement : MonoBehaviour
 		StunnedDuration += 1.5f;
 		CurrentState = State.Stunned;
 
-		mesh.material.color = Color.red;
-		StartCoroutine(PerformActionAfterDelay(0.2f, () => mesh.material.color = Color.white));
-
 		if (doKnockback)
 		{
-			DoKnockback(source);
+			DoKnockback(source, false);
 		}
 	}
 
-	public void DoKnockback(Transform source)
+	public void DoKnockback(Transform source, bool stun)
 	{
+		if (stun)
+			activationItem.Stun();
+
+		mesh.material.color = Color.red;
+		StartCoroutine(PerformActionAfterDelay(0.2f, () => mesh.material.color = Color.white));
+
+		animator.SetTrigger("Hit");
+
 		var dir = (source.position - transform.position).normalized;
 
 		dir.y = 0;
@@ -198,7 +207,11 @@ public class AiMovement : MonoBehaviour
 		//	endPosition = hit.position;
 		//}
 
-		transform.DOJump(endPosition + knockBackOffset, jumpHeight, numJumps, timeToKnockback);
+		transform.DOJump(endPosition + knockBackOffset, jumpHeight, numJumps, timeToKnockback).OnComplete(() =>
+		{
+			if (stun)
+				activationItem.StopStun();
+		});
 	}
 
 	void Die()
