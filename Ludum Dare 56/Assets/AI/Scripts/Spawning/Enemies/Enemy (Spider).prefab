@@ -239,7 +239,9 @@ MonoBehaviour:
   jumpHeight: 0
   numJumps: 1
   timeToKnockback: 0.2
+  timeToFlipback: 0.2
   knockbackDist: 3
+  flipEase: 1
   deathType: 1
   toSpawn:
   - {fileID: 9126521257642916933}
