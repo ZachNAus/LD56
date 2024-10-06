@@ -25,6 +25,12 @@ public class AiMovement : MonoBehaviour
 		Activated,
 		Stunned,
 	}
+
+	public enum DeathType
+	{
+		FlipAway,
+		ExplodeIntoPieces
+	}
 	#endregion
 
 	[ReadOnly]
@@ -63,6 +69,10 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] int numJumps = 1;
 	[SerializeField] float timeToKnockback = 0.6f;
 	[SerializeField] float knockbackDist = 3;
+
+	[SerializeField] DeathType deathType;
+
+	[SerializeField] Rigidbody[] toSpawn;
 
 	public float StunnedDuration { get; private set; }
 	State beforeState;
@@ -216,15 +226,37 @@ public class AiMovement : MonoBehaviour
 
 	void Die()
 	{
-		//var dir = (transform.position - PlayerStats.instance.transform.position).normalized;
-		transform.DORotate(new Vector3(-720, 0, 0), timeToKnockback, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).OnComplete(() =>
+		switch (deathType)
 		{
-			var inst = Instantiate(deathParticles);
-			inst.transform.position = transform.position;
-			Destroy(inst, 5);
+			case DeathType.FlipAway:
+				//var dir = (transform.position - PlayerStats.instance.transform.position).normalized;
+				transform.DORotate(new Vector3(-720, 0, 0), timeToKnockback, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).OnComplete(() =>
+				{
+					var inst = Instantiate(deathParticles);
+					inst.transform.position = transform.position;
+					Destroy(inst, 5);
 
-			Destroy(gameObject);
-		});
+					Destroy(gameObject);
+				});
+				break;
+			case DeathType.ExplodeIntoPieces:
+				foreach(var item in toSpawn)
+				{
+					item.gameObject.SetActive(true);
+
+					item.isKinematic = false;
+
+					var launchDirection = Random.insideUnitSphere;
+					launchDirection.y = Mathf.Abs(launchDirection.y);
+					launchDirection *= Random.Range(250, 750);
+
+					item.AddForce(launchDirection);
+				}
+				mesh.gameObject.SetActive(false);
+
+				Destroy(gameObject, 2.5f);
+				break;
+		}
 	}
 
 	IEnumerator PerformActionAfterDelay(float delay, System.Action action)
