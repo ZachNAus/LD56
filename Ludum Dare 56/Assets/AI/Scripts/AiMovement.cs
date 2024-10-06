@@ -50,7 +50,7 @@ public class AiMovement : MonoBehaviour
 
 	[Space]
 
-	[SerializeField] Vector3 knockBackOffset = new Vector3(0,1,0);
+	[SerializeField] Vector3 knockBackOffset = new Vector3(0, 1, 0);
 
 	[SerializeField] GameObject deathParticles;
 	[SerializeField] ParticleSystem dizzyParticles;
@@ -173,7 +173,9 @@ public class AiMovement : MonoBehaviour
 
 		RaycastHit rayHit;
 
-		var endPosition = transform.position + (dir * -3);
+		var dist = health.IsDead ? -10 : -3;
+
+		var endPosition = transform.position + (dir * dist);
 
 		if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit))
 		{
@@ -190,13 +192,13 @@ public class AiMovement : MonoBehaviour
 
 	void Die()
 	{
-		var inst = Instantiate(deathParticles);
-		inst.transform.position = transform.position;
-		Destroy(inst, 5);
+		transform.DORotate(new Vector3(-720, 0, 0), 1, RotateMode.LocalAxisAdd).OnComplete(() =>
+		{
+			var inst = Instantiate(deathParticles);
+			inst.transform.position = transform.position;
+			Destroy(inst, 5);
 
-		//var dir = (PlayerStats.instance.transform.position - transform.position).normalized;
-
-		transform.DORotate(new Vector3(-720, 0, 0), 1, RotateMode.LocalAxisAdd);
-		Destroy(gameObject, 1);
+			Destroy(gameObject);
+		});
 	}
 }
