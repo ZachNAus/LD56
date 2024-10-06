@@ -12,7 +12,7 @@ public class PlayerStats : BaseHealth
 
 	public override void TakeDamage(float damage, UnityEngine.Transform source, bool doKnockback)
 	{
-		float res = Player.instance.TakeDamage(damage);
+		float res = Player.instance.TakeDamage(damage, source);
 
 		if(res > 0)
 		{

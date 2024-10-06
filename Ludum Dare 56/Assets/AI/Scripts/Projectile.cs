@@ -80,7 +80,7 @@ public class Projectile : MonoBehaviour
 				health.TakeDamage(damage, transform, doKnockback);
 				DestroyProj();
 
-				float res = Player.instance.TakeDamage(damage);
+				float res = Player.instance.TakeDamage(damage, transform);
 
 				if (health == PlayerStats.instance && ParentProjectile && res == 0)
 				{

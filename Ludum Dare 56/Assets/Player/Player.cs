@@ -139,19 +139,22 @@ public class Player : MonoBehaviour
 		switch (exitingState)
 		{
 			case PlayerState.Dead:
-			{
-			} break;
+				{
+				}
+				break;
 			case PlayerState.Blocking:
-			{
-				animator.Play("BlockEnd");
-				shieldBack.transform.DOKill();
-				shieldBack.transform.DOScale(1f, 0.25f);
-				shieldHeld.transform.DOKill();
-				shieldHeld.transform.DOScale(0f, 0.25f);
-			} break;
+				{
+					animator.Play("BlockEnd");
+					shieldBack.transform.DOKill();
+					shieldBack.transform.DOScale(1f, 0.25f);
+					shieldHeld.transform.DOKill();
+					shieldHeld.transform.DOScale(0f, 0.25f);
+				}
+				break;
 			case PlayerState.Normal:
-			{
-			} break;
+				{
+				}
+				break;
 		}
 	}
 
@@ -160,25 +163,28 @@ public class Player : MonoBehaviour
 		switch (enteringState)
 		{
 			case PlayerState.Dead:
-			{
-				velocity.x = velocity.z = 0;
-				animator.SetLayerWeight(AnimatorLayerTorso(), 0);
-				animator.Play("Die");
-			} break;
+				{
+					velocity.x = velocity.z = 0;
+					animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+					animator.Play("Die");
+				}
+				break;
 			case PlayerState.Blocking:
-			{
-				animator.SetLayerWeight(AnimatorLayerTorso(), 0);
-				velocity.x = velocity.z = 0;
-				shieldBack.transform.DOKill();
-				shieldBack.transform.localScale = Vector3.zero;
-				shieldHeld.transform.DOKill();
-				shieldHeld.transform.DOScale(1.3f, 0.25f);
-				// TODO: Hide holdable?
-				animator.Play("Block");
-			} break;
+				{
+					animator.SetLayerWeight(AnimatorLayerTorso(), 0);
+					velocity.x = velocity.z = 0;
+					shieldBack.transform.DOKill();
+					shieldBack.transform.localScale = Vector3.zero;
+					shieldHeld.transform.DOKill();
+					shieldHeld.transform.DOScale(1.3f, 0.25f);
+					// TODO: Hide holdable?
+					animator.Play("Block");
+				}
+				break;
 			case PlayerState.Normal:
-			{
-			} break;
+				{
+				}
+				break;
 		}
 	}
 
@@ -187,96 +193,104 @@ public class Player : MonoBehaviour
 		switch (state)
 		{
 			case PlayerState.Dead:
-			{
-				// Do nothing.
-			} break;
+				{
+					// Do nothing.
+				}
+				break;
 			case PlayerState.Blocking:
-			{
-				if (!Input.GetMouseButton(1))
 				{
-					SetState(PlayerState.Normal);
+					if (!Input.GetMouseButton(1))
+					{
+						SetState(PlayerState.Normal);
+					}
 				}
-			} break;
+				break;
 			case PlayerState.Normal:
-			{
-				if (holdable != null)
 				{
-					// Holding something.
-					if (Input.GetKey(dropKey))
+					if (holdable != null)
 					{
-						DropHoldable();
-					}
-					// Try to use the holdable.
-					else if (mouse1Down)
-					{
-						holdable.OnUse(true);
-					}
-					else if (mouse1Up)
-					{
-						holdable.OnUse(false);
-					}
-				}
-				else
-				{
-					// Not holding anything.
-					if (mouse1Down)
-					{
-						// Look for a holdable pickup.
-						// TODO: Better casting.
-						var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
-						foreach (var c in cast)
+						// Holding something.
+						if (Input.GetKey(dropKey))
 						{
-							var pickup = c.transform.GetComponentInParent<Pickup>();
-							var hold = pickup?.Pick();
-							if (hold != null)
+							DropHoldable();
+						}
+						// Try to use the holdable.
+						else if (mouse1Down)
+						{
+							holdable.OnUse(true);
+						}
+						else if (mouse1Up)
+						{
+							holdable.OnUse(false);
+						}
+					}
+					else
+					{
+						// Not holding anything.
+						if (mouse1Down)
+						{
+							// Look for a holdable pickup.
+							// TODO: Better casting.
+							var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
+							foreach (var c in cast)
 							{
-								// Found something to hold.
-								Destroy(pickup.gameObject);
-								SetHoldable(hold);
-								break;
+								var pickup = c.transform.GetComponentInParent<Pickup>();
+								var hold = pickup?.Pick();
+								if (hold != null)
+								{
+									// Found something to hold.
+									Destroy(pickup.gameObject);
+									SetHoldable(hold);
+									break;
+								}
 							}
 						}
 					}
-				}
 
-				// Apply lateral movement (side and forwards).
-				var moveDir = new Vector3(input.x, 0, input.z);
-				// Move relative to the camera.
-				moveDir = playerCamera.transform.TransformDirection(moveDir);
-				moveDir.y = 0;
-				moveDir.Normalize();
-				velocity.x = moveDir.x * moveSpeed;
-				velocity.z = moveDir.z * moveSpeed;
-				if (moveDir.sqrMagnitude != 0)
-				{
-					// Rotate player to direction of camera.
-					transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
-				}
+					// Apply lateral movement (side and forwards).
+					var moveDir = new Vector3(input.x, 0, input.z);
+					// Move relative to the camera.
+					moveDir = playerCamera.transform.TransformDirection(moveDir);
+					moveDir.y = 0;
+					moveDir.Normalize();
+					velocity.x = moveDir.x * moveSpeed;
+					velocity.z = moveDir.z * moveSpeed;
+					if (moveDir.sqrMagnitude != 0)
+					{
+						// Rotate player to direction of camera.
+						transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), modelRotateSpeed * Time.deltaTime);
+					}
 
-				// Apply jumping.
-				if (IsGrounded())
-				{
-					if (doJump && velocity.y <= 0f)
+					// Apply jumping.
+					if (IsGrounded())
 					{
-						velocity.y += jumpPower;
-						animator.Play("Jump");
-					}
-					else if (Input.GetMouseButton(1))
-					{
-						// TODO: Have some way for holdables to prevent transitioning to block state?
-						SetState(PlayerState.Blocking);
+						if (doJump && velocity.y <= 0f)
+						{
+							velocity.y += jumpPower;
+							animator.Play("Jump");
+						}
+						else if (Input.GetMouseButton(1))
+						{
+							// TODO: Have some way for holdables to prevent transitioning to block state?
+							SetState(PlayerState.Blocking);
+						}
 					}
 				}
-			} break;
+				break;
 		}
 	}
 
-	public virtual float TakeDamage(float damage)
+	public virtual float TakeDamage(float damage, Transform source)
 	{
 		if (state == PlayerState.Blocking)
 		{
-			animator.Play("BlockImpact");
-			return 0;
+			var dirToPlayer = (source.position - transform.position).normalized;
+
+			if (Vector3.Angle(dirToPlayer, transform.forward) < 90)
+			{
+				animator.Play("BlockImpact");
+				return 0;
+			}
 		}
 		return damage;
 	}
@@ -338,7 +352,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (Transform child in parent)
 		{
-			if(child.name == childName)
+			if (child.name == childName)
 			{
 				return child;
 			}
