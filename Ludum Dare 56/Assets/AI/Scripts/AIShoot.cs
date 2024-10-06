@@ -22,6 +22,8 @@ public class AIShoot : AIChase
 
 	[Min(0)] [SerializeField] float shootDelay;
 
+	[SerializeField] Animator anim;
+
 	bool CountDown = false;
 	float timeTillNextShoot;
 
@@ -98,6 +100,8 @@ public class AIShoot : AIChase
 
 			StartCoroutine(PerformActionAfterDelay(stopTimeWhenShooting, StartMoving));
 		}
+
+		anim.SetTrigger("Atk");
 	}
 
 	IEnumerator PerformActionAfterDelay(float delay, System.Action action)

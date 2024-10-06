@@ -46,6 +46,8 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] BaseHealth health;
 
+	[SerializeField] Animator animator;
+
 	[Space]
 
 	[SerializeField] Vector3 knockBackOffset = new Vector3(0,1,0);
@@ -147,6 +149,8 @@ public class AiMovement : MonoBehaviour
 			beforeState = CurrentState;
 
 			activationItem.Stun();
+
+			animator.SetTrigger("Hit");
 		}
 
 		dizzyParticles.Play();

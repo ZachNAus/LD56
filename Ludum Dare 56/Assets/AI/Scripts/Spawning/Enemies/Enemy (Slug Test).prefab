@@ -229,6 +229,7 @@ MonoBehaviour:
   deactivateRange: 20
   activationItem: {fileID: 7678249926429808980}
   health: {fileID: 1346298416404595423}
+  animator: {fileID: 8058081855512684680}
   knockBackOffset: {x: 0, y: 1, z: 0}
   deathParticles: {fileID: 6248334274763161592, guid: 196825cfbab688842b5dc7826f4b9e6c,
     type: 3}
@@ -313,6 +314,7 @@ MonoBehaviour:
   spawnPos: {fileID: 6026995076361688604}
   stopTimeWhenShooting: 0
   shootDelay: 0.5
+  anim: {fileID: 8058081855512684680}
 --- !u!195 &6292642179920763503
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -501,6 +503,12 @@ PrefabInstance:
 --- !u!4 &4121957034917065458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 965a9f25f1e16174d935d8be5f5cc20d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4521221950984033561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8058081855512684680 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 965a9f25f1e16174d935d8be5f5cc20d,
     type: 3}
   m_PrefabInstance: {fileID: 4521221950984033561}
   m_PrefabAsset: {fileID: 0}
