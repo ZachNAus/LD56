@@ -69,7 +69,9 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] float jumpHeight;
 	[SerializeField] int numJumps = 1;
 	[SerializeField] float timeToKnockback = 0.6f;
+	[SerializeField] float timeToFlipback = 0.6f;
 	[SerializeField] float knockbackDist = 3;
+	[SerializeField] Ease flipEase = Ease.Linear;
 
 	[SerializeField] DeathType deathType;
 
@@ -236,7 +238,7 @@ public class AiMovement : MonoBehaviour
 		{
 			case DeathType.FlipAway:
 				//var dir = (transform.position - PlayerStats.instance.transform.position).normalized;
-				transform.DORotate(new Vector3(-720, 0, 0), timeToKnockback, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).OnComplete(() =>
+				transform.DORotate(new Vector3(-720, 0, 0), timeToFlipback, RotateMode.LocalAxisAdd).SetEase(flipEase).OnComplete(() =>
 				{
 					var inst = Instantiate(deathParticles);
 					inst.transform.position = transform.position;

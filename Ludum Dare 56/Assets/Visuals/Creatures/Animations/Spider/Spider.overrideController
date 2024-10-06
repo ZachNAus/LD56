@@ -9,10 +9,6 @@ AnimatorOverrideController:
   m_Name: Spider
   m_Controller: {fileID: 9100000, guid: df2672d055aec45448c77efefcf614a5, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 1827226128182048838, guid: 3aee98459b724694e8cbe7cb29718968,
-      type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: 6cffb59689777404a9742b2c2172cecf,
-      type: 3}
   - m_OriginalClip: {fileID: 1827226128182048838, guid: 7366b93b2e016a04c9903259973e98a5,
       type: 3}
     m_OverrideClip: {fileID: 1827226128182048838, guid: 602349d0cee091948aae7b2581092b46,
@@ -20,4 +16,8 @@ AnimatorOverrideController:
   - m_OriginalClip: {fileID: 1827226128182048838, guid: eead6725d268a5e4ba055db6156870ac,
       type: 3}
     m_OverrideClip: {fileID: 1827226128182048838, guid: 50341b8b4c1ec6945a1b557e8a38a8e1,
+      type: 3}
+  - m_OriginalClip: {fileID: 1827226128182048838, guid: 3aee98459b724694e8cbe7cb29718968,
+      type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 6cffb59689777404a9742b2c2172cecf,
       type: 3}
