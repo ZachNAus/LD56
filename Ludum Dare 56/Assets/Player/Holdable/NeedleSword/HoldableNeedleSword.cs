@@ -24,6 +24,8 @@ public class HoldableNeedleSword : Holdable
 		if (down && (Time.time - swingTime) >= cooldown)
 		{
 			swingTime = Time.time;
+			// Align player rotation to camera.
+			player.transform.rotation = Quaternion.LookRotation(player.playerCamera.transform.forward);
 			player.PlayTorso("Slash");
 			hitbox.Show();
 			// TODO: Disallow while jumping?

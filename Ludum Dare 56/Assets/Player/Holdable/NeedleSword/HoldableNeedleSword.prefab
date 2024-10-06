@@ -157,6 +157,7 @@ MonoBehaviour:
     type: 3}
   model: {fileID: 3285442730277930648}
   hitbox: {fileID: 50558327475364602}
+  cooldown: 1
 --- !u!114 &50558327475364602
 MonoBehaviour:
   m_ObjectHideFlags: 0
