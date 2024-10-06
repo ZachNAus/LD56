@@ -191,7 +191,7 @@ public class AiMovement : MonoBehaviour
 		//	endPosition = hit.position;
 		//}
 
-		transform.DOJump(endPosition + knockBackOffset, 0.3f, 1, 1);
+		transform.DOJump(endPosition + knockBackOffset, 0.6f, 1, 0.6f);
 	}
 
 	void Die()
