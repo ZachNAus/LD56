@@ -158,7 +158,7 @@ public class AiMovement : MonoBehaviour
 		}
 	}
 
-	void DoKnockback(Transform source)
+	public void DoKnockback(Transform source)
 	{
 		var dir = (source.position - transform.position).normalized;
 
