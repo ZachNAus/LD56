@@ -217,7 +217,7 @@ public class AiMovement : MonoBehaviour
 	void Die()
 	{
 		//var dir = (transform.position - PlayerStats.instance.transform.position).normalized;
-		transform.DORotate(new Vector3(-720, 0, 0), 0.8f, RotateMode.LocalAxisAdd).OnComplete(() =>
+		transform.DORotate(new Vector3(-720, 0, 0), timeToKnockback, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).OnComplete(() =>
 		{
 			var inst = Instantiate(deathParticles);
 			inst.transform.position = transform.position;
