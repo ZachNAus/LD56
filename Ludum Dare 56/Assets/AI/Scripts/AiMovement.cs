@@ -62,6 +62,7 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] float jumpHeight;
 	[SerializeField] int numJumps = 1;
 	[SerializeField] float timeToKnockback = 0.6f;
+	[SerializeField] float knockbackDist = 3;
 
 	public float StunnedDuration { get; private set; }
 	State beforeState;
@@ -183,7 +184,7 @@ public class AiMovement : MonoBehaviour
 
 		RaycastHit rayHit;
 
-		var dist = health.IsDead ? -10 : -3;
+		var dist = health.IsDead ? -10 : -knockbackDist;
 
 		var endPosition = transform.position + (dir * dist);
 
