@@ -274,9 +274,8 @@ public class Player : MonoBehaviour
 							// TODO: Have some way for holdables to prevent transitioning to block state?
 							SetState(PlayerState.Blocking);
 
-							//Look towards cam
-							transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward);
-
+							// Look towards cam
+							transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward.OnlyXZ());
 						}
 					}
 				}
@@ -370,5 +369,20 @@ public class Player : MonoBehaviour
 			}
 		}
 		return null;
+	}
+}
+
+public static class Utilities
+{
+	public static Vector3 OnlyY(this Vector3 vec)
+	{
+		vec.x = vec.z = 0;
+		return vec;
+	}
+
+	public static Vector3 OnlyXZ(this Vector3 vec)
+	{
+		vec.y = 0;
+		return vec;
 	}
 }

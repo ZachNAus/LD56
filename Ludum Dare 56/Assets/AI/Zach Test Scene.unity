@@ -2082,7 +2082,7 @@ MonoBehaviour:
 
     Restart - F5
 
-'
+    Invert Camera - Y'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4159,21 +4159,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7582047627742867782, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.15883833
-      objectReference: {fileID: 0}
-    - target: {fileID: 7582047627742867782, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 2.255151e-17
-      objectReference: {fileID: 0}
-    - target: {fileID: 7582047627742867782, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 6.0109005e-17
-      objectReference: {fileID: 0}
     - target: {fileID: 7618515067249534787, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
         type: 3}
       propertyPath: dropKey
@@ -5662,7 +5647,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 70
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -5688,8 +5673,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917850611}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15883833, y: 2.255151e-17, z: 6.0109005e-17, w: 0.9873046}
-  m_LocalPosition: {x: -12.098122, y: 4.0915613, z: -1.4156194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.098122, y: 1.0915613, z: 1.3043804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
