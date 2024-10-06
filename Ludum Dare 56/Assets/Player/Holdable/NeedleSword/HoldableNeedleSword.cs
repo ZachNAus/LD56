@@ -23,6 +23,7 @@ public class HoldableNeedleSword : Holdable
 	{
 		if (down && (Time.time - swingTime) >= cooldown)
 		{
+			hitPeople.Clear();
 			swingTime = Time.time;
 			// Align player rotation to camera.
 			player.transform.rotation = Quaternion.LookRotation(player.playerCamera.transform.forward);
@@ -32,13 +33,18 @@ public class HoldableNeedleSword : Holdable
 		}
 	}
 
+	System.Collections.Generic.List<IHasHealth> hitPeople = new System.Collections.Generic.List<IHasHealth>();
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.TryGetComponent<IHasHealth>(out var h))
 		{
 			// TODO: Pass the player here instead?
-			if(h != PlayerStats.instance)
+			if(h != PlayerStats.instance && hitPeople.Contains(h) == false)
+			{
+				hitPeople.Add(h);
 				h.TakeDamage(1, transform, true);
+			}
 		}
 	}
 }

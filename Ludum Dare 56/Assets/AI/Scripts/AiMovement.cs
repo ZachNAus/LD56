@@ -55,6 +55,7 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] Animator animator;
 
 	[SerializeField] SkinnedMeshRenderer mesh;
+	Color meshBaseColor;
 
 	[Space]
 
@@ -80,6 +81,8 @@ public class AiMovement : MonoBehaviour
 	private void Awake()
 	{
 		activationItem.Movement = this;
+
+		meshBaseColor = mesh.material.color;
 
 		health.OnTakedamage.AddListener((t, b) =>
 		{
@@ -196,7 +199,7 @@ public class AiMovement : MonoBehaviour
 			activationItem.Stun();
 
 		mesh.material.color = Color.red;
-		StartCoroutine(PerformActionAfterDelay(0.2f, () => mesh.material.color = Color.white));
+		StartCoroutine(PerformActionAfterDelay(0.2f, () => mesh.material.color = meshBaseColor));
 
 		animator.SetTrigger("Hit");
 

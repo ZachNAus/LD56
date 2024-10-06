@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7678249926429808980}
   - component: {fileID: 6292642179920763503}
   m_Layer: 7
-  m_Name: Enemy (Slug Test)
+  m_Name: Enemy (Slug Fast)
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -239,6 +239,8 @@ MonoBehaviour:
   numJumps: 1
   timeToKnockback: 0.2
   knockbackDist: 3
+  deathType: 0
+  toSpawn: []
 --- !u!114 &1346298416404595423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77df3469b7515e44190b5e4313ca6a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 1
   healthBar: {fileID: 1001570954863013849}
   OnTakedamage:
     m_PersistentCalls:
@@ -318,7 +320,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 15
   m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 250
@@ -483,6 +485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slug_Skinned
       objectReference: {fileID: 0}
+    - target: {fileID: 4467743797283331514, guid: 965a9f25f1e16174d935d8be5f5cc20d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c98beb425fde30e47b7b9c8c2c6fd439, type: 2}
     - target: {fileID: 5866666021909216657, guid: 965a9f25f1e16174d935d8be5f5cc20d,
         type: 3}
       propertyPath: m_Controller
