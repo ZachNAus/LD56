@@ -37,6 +37,9 @@ public class PlayerCamera : MonoBehaviour
 	{
 		transform.position = player.transform.position;
 		transform.Rotate(Vector3.up, mouseDelta.x * rotateSpeed);
+		
+		//transform.Rotate(Vector3.right, -mouseDelta.y * rotateSpeed);
+
 		// Odd way to do camera.
 		// var child = transform.GetChild(0);
 		// Vector3 childPos = child.transform.localPosition;
