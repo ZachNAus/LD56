@@ -1,3 +1,5 @@
+using DG.Tweening;
+
 public class PlayerStats : BaseHealth
 {
     public static PlayerStats instance;
@@ -11,6 +13,12 @@ public class PlayerStats : BaseHealth
 	public override void TakeDamage(float damage, UnityEngine.Transform source, bool doKnockback)
 	{
 		float res = Player.instance.TakeDamage(damage);
+
+		if(res > 0)
+		{
+			UnityEngine.Camera.main.DOShakePosition(0.5f);
+		}
+
 		base.TakeDamage(res, source, doKnockback);
 	}
 
