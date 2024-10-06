@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviour
 
 				if(health == PlayerStats.instance && ParentProjectile)
 				{
-					(Caster as Component).GetComponent<AiMovement>().DoKnockback(other.transform);
+					(Caster as Component).GetComponent<AiMovement>().Stun(other.transform, true);
 				}
 			}
 		}

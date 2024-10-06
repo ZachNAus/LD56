@@ -37,7 +37,8 @@ public class HoldableNeedleSword : Holdable
 		if (other.TryGetComponent<IHasHealth>(out var h))
 		{
 			// TODO: Pass the player here instead?
-			h.TakeDamage(1, transform, true);
+			if(h != PlayerStats.instance)
+				h.TakeDamage(1, transform, true);
 		}
 	}
 }

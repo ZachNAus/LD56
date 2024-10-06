@@ -51,6 +51,7 @@ public class AiMovement : MonoBehaviour
 	[SerializeField] Vector3 knockBackOffset = new Vector3(0,1,0);
 
 	[SerializeField] GameObject deathParticles;
+	[SerializeField] ParticleSystem dizzyParticles;
 
 	public float StunnedDuration { get; private set; }
 	State beforeState;
@@ -147,6 +148,8 @@ public class AiMovement : MonoBehaviour
 
 			activationItem.Stun();
 		}
+
+		dizzyParticles.Play();
 
 		StunnedDuration += 1.5f;
 		CurrentState = State.Stunned;
