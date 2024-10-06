@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
 	public Vector3 velocity;
 	[Tooltip("Gravity in units per second.")]
 	public Vector3 gravity;
-	public KeyCode blockKey;
+	//public KeyCode blockKey;
+	public KeyCode dropKey;
 
 	// Buffered input.
 	private Vector3 input;
@@ -191,7 +192,7 @@ public class Player : MonoBehaviour
 			} break;
 			case PlayerState.Blocking:
 			{
-				if (!Input.GetKey(blockKey))
+				if (!Input.GetMouseButton(1))
 				{
 					SetState(PlayerState.Normal);
 				}
@@ -201,7 +202,7 @@ public class Player : MonoBehaviour
 				if (holdable != null)
 				{
 					// Holding something.
-					if (mouse2Down)
+					if (Input.GetKey(dropKey))
 					{
 						DropHoldable();
 					}
@@ -260,7 +261,7 @@ public class Player : MonoBehaviour
 						velocity.y += jumpPower;
 						animator.Play("Jump");
 					}
-					else if (Input.GetKey(blockKey))
+					else if (Input.GetMouseButton(1))
 					{
 						// TODO: Have some way for holdables to prevent transitioning to block state?
 						SetState(PlayerState.Blocking);

@@ -1973,9 +1973,9 @@ MonoBehaviour:
     Pickup/Attack - Left Mouse
 
     Shield
-    - Q
+    - Right Mouse
 
-    Drop - Right Mouse
+    Drop - Q
 
     Restart - F5
 
@@ -4064,12 +4064,17 @@ PrefabInstance:
     - target: {fileID: 7582047627742867782, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 8.430754e-16
+      value: -8.430754e-16
       objectReference: {fileID: 0}
     - target: {fileID: 7582047627742867782, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.01826615e-16
+      value: -1.01826615e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618515067249534787, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: dropKey
+      value: 113
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5580,7 +5585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917850611}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15883833, y: 8.430754e-16, z: 1.01826615e-16, w: 0.9873046}
+  m_LocalRotation: {x: 0.15883833, y: -8.430754e-16, z: -1.01826615e-16, w: 0.9873046}
   m_LocalPosition: {x: -12.098122, y: 4.0915613, z: -1.4156194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
