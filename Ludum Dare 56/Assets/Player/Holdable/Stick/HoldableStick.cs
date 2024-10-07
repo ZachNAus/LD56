@@ -11,6 +11,8 @@ public class HoldableStick : Holdable
 
 	public int damage = 1;
 
+	public AudioClip onAtk;
+
 	private float swingTime;
 
 	public override void OnEnter()
@@ -34,6 +36,9 @@ public class HoldableStick : Holdable
 			player.PlayTorso("Slash");
 			hitbox.Show();
 			// TODO: Disallow while jumping?
+
+			if (onAtk)
+				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
 		}
 	}
 

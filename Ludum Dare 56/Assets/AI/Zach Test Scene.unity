@@ -428,11 +428,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 897f189885f7c2443a9cf47ad25c7216, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4359,6 +4359,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onBlock
+      value: 
+      objectReference: {fileID: 8300000, guid: 610e43379515afb4c8ec2ebc1e08580d, type: 3}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onHitSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 701bca74c2321134ca21a8cc3104778a, type: 3}
     - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
         type: 3}
       propertyPath: healthBar

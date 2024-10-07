@@ -281,7 +281,7 @@ MonoBehaviour:
   healthBar: {fileID: 7153536073491648631}
   invulnTime: 0.5
   onDeathSFX: {fileID: 0}
-  onHitSFX: {fileID: 0}
+  onHitSFX: {fileID: 8300000, guid: 237694783eec7934cb816d7881e2d742, type: 3}
   OnTakedamage:
     m_PersistentCalls:
       m_Calls: []
@@ -369,11 +369,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 48e5e07711cfe424b84450bc2a728475, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

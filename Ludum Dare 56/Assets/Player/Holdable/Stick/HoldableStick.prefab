@@ -158,6 +158,8 @@ MonoBehaviour:
   model: {fileID: 5512393517623946546}
   hitbox: {fileID: 2739572962790658592}
   cooldown: 0.4
+  damage: 1
+  onAtk: {fileID: 8300000, guid: fdbde49adfbb2554fba65e162997efe2, type: 3}
 --- !u!114 &2739572962790658592
 MonoBehaviour:
   m_ObjectHideFlags: 0

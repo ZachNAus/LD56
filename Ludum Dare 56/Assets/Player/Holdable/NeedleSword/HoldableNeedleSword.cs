@@ -9,6 +9,8 @@ public class HoldableNeedleSword : Holdable
 
 	public int damage;
 
+	public AudioClip onAtk;
+
 	private float swingTime;
 
 	public override void OnEnter()
@@ -32,6 +34,9 @@ public class HoldableNeedleSword : Holdable
 			player.PlayTorso("Slash");
 			hitbox.Show();
 			// TODO: Disallow while jumping?
+
+			if (onAtk)
+				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
 		}
 	}
 

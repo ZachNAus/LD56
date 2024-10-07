@@ -10,6 +10,8 @@ public class HoldableRosmary : Holdable
 
 	public int damage = 2;
 
+	public AudioClip onAtk;
+
 	private float swingTime;
 
 	public override void OnEnter()
@@ -33,6 +35,9 @@ public class HoldableRosmary : Holdable
 			player.PlayTorso("Slash");
 			hitbox.Show();
 			// TODO: Disallow while jumping?
+
+			if(onAtk)
+				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
 		}
 	}
 
