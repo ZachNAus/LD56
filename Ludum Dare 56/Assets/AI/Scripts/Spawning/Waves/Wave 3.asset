@@ -23,5 +23,8 @@ MonoBehaviour:
     - enemy: {fileID: 3103319193604481875, guid: d50642eba49be874c9977e5fbc0d5e59,
         type: 3}
       permanantlyRemoveSpot: 0
-    m_values: 020000000100000002000000
-  playerMessage: Good thing I have a shield!
+    - enemy: {fileID: 5145756331015137735, guid: 8d71bb230f775ae4a9d48f81dbacb36f,
+        type: 3}
+      permanantlyRemoveSpot: 1
+    m_values: 02000000010000000200000002000000
+  playerMessage: There should be a better weapon somewhere...

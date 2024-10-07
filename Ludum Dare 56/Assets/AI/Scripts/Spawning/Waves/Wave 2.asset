@@ -17,5 +17,8 @@ MonoBehaviour:
     - enemy: {fileID: 6252450687822795562, guid: b881ed45992e210468c72bdfabb0cbdc,
         type: 3}
       permanantlyRemoveSpot: 0
-    m_values: 04000000
+    - enemy: {fileID: 3103319193604481875, guid: d50642eba49be874c9977e5fbc0d5e59,
+        type: 3}
+      permanantlyRemoveSpot: 0
+    m_values: 0400000001000000
   playerMessage: Feeling sluggish?
