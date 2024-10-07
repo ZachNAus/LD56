@@ -27,3 +27,4 @@ MonoBehaviour:
         type: 3}
       permanantlyRemoveSpot: 0
     m_values: 06000000020000000200000004000000
+  playerMessage: Something big is coming...

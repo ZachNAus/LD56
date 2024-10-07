@@ -24,7 +24,9 @@ public class EnemySpawnerManager : MonoBehaviour
 
 	private void Start()
 	{
-		StartWave();
+		//StartWave();
+
+		DialogueManager.instance.SaySomething("I need to defend myself, let's grab that stick", 20);
 
 		PlayerStats.instance.OnDeath.AddListener(OnPlayerDie);
 	}
@@ -57,6 +59,11 @@ public class EnemySpawnerManager : MonoBehaviour
 			{
 				SpawnEnemy(enemy.Key);
 			}
+		}
+
+		if (string.IsNullOrEmpty(waves[CurrentWave].playerMessage) == false)
+		{
+			DialogueManager.instance.SaySomething(waves[CurrentWave].playerMessage, 0);
 		}
 	}
 

@@ -24,3 +24,4 @@ MonoBehaviour:
         type: 3}
       permanantlyRemoveSpot: 0
     m_values: 020000000100000002000000
+  playerMessage: Good thing I have a shield!
