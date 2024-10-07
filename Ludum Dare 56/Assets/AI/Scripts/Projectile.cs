@@ -77,14 +77,17 @@ public class Projectile : MonoBehaviour
 		{
 			if (Caster != health)
 			{
-				health.TakeDamage(damage, transform, doKnockback);
-				DestroyProj();
-
-				float res = Player.instance.TakeDamage(damage, transform);
-
-				if (health == PlayerStats.instance && ParentProjectile && res == 0)
+				if (health == PlayerStats.instance)
 				{
-					(Caster as Component).GetComponent<AiMovement>().Stun(other.transform, true);
+					health.TakeDamage(damage, transform, doKnockback);
+					DestroyProj();
+
+					float res = Player.instance.TakeDamage(damage, transform);
+
+					if (health == PlayerStats.instance && ParentProjectile && res == 0)
+					{
+						(Caster as Component).GetComponent<AiMovement>().Stun(other.transform, true);
+					}
 				}
 			}
 		}
