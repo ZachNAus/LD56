@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77df3469b7515e44190b5e4313ca6a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 9
   healthBar: {fileID: 1001570954863013849}
   invulnTime: 0.5
   onDeathSFX: {fileID: 0}
