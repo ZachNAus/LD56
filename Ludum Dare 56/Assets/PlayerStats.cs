@@ -25,7 +25,7 @@ public class PlayerStats : BaseHealth
 		{
 			//UnityEngine.Camera.main.DOShakePosition(0.5f);
 
-			healthBar.transform.DOShakePosition(0.5f, 50);
+			healthBar.transform.parent.DOShakePosition(0.5f, 50);
 		}
 		else
 		{
