@@ -8,6 +8,8 @@ public class HealthPickup : MonoBehaviour
 
 	[SerializeField] Vector3 rotate;
 
+	public AudioClip pickupS;
+
 	private void Update()
 	{
 		transform.Rotate(rotate * Time.deltaTime);
@@ -21,6 +23,8 @@ public class HealthPickup : MonoBehaviour
 				return;
 
 			s.TakeDamage(-healthToGain, transform, false);
+
+			PlayerStats.instance.audioSource.PlayOneShot(pickupS);
 
 			Destroy(gameObject);
 		}

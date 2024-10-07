@@ -334,7 +334,7 @@ MonoBehaviour:
   agent: {fileID: 8974931971536541000}
   preferredDistance: 0
   shootingCondition: 1
-  projectileToSummon: {fileID: 108467953100988835, guid: ceca62d1f75086f498438cd570ec9893,
+  projectileToSummon: {fileID: 108467953100988835, guid: 1ad58b94061370b4791a167226eb3417,
     type: 3}
   spawnPos: {fileID: 7726105924183157599}
   stopTimeWhenShooting: 0

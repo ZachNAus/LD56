@@ -4692,6 +4692,26 @@ PrefabInstance:
       propertyPath: playerDialogue
       value: 
       objectReference: {fileID: 747489281}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onHitSFX.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onHitSFX.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f11a2c885ed1784d9648e75dc522dd6, type: 3}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onHitSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a818e7fefa5e97640aecb91b6a8a879b, type: 3}
+    - target: {fileID: 3916818270857482343, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
+        type: 3}
+      propertyPath: onHitSFX.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 67f3a5c12c09fdc4d93fd428a753a1e5, type: 3}
     - target: {fileID: 4238772424378122724, guid: 4e523a8b5cc5e4e4d9a57e516fbae2b0,
         type: 3}
       propertyPath: m_Layer
