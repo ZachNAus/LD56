@@ -27,7 +27,7 @@ public class PlayerStats : BaseHealth
 		}
 		else
 		{
-			if(onBlock)
+			if(onBlock && res == 0)
 				GetComponent<AudioSource>().PlayOneShot(onBlock);
 		}
 
