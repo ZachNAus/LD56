@@ -22,9 +22,12 @@ public class DialogueManager : MonoBehaviour
 		instance = this;
 	}
 
+	float ExtraLifeTime;
+
 	[Button]
-	public void SaySomething(string msg)
+	public void SaySomething(string msg, float extraLifeTime)
 	{
+		ExtraLifeTime = extraLifeTime;
 		txt.maxVisibleCharacters = 0;
 		txt.SetText(msg);
 
@@ -59,7 +62,7 @@ public class DialogueManager : MonoBehaviour
 			DOTween.To(() => alpha, x => alpha = x, 0, 1).OnUpdate(() =>
 			{
 				fadeArea.alpha = alpha;
-			}).SetDelay(2);
+			}).SetDelay(2 + ExtraLifeTime);
 		}
 	}
 }
