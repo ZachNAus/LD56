@@ -239,10 +239,10 @@ MonoBehaviour:
   jumpHeight: 0
   numJumps: 1
   timeToKnockback: 0.2
-  timeToFlipback: 0.2
+  timeToFlipback: 0.6
   knockbackDist: 3
   flipEase: 1
-  flipAmount: -720
+  flipAmount: -360
   deathType: 0
   toSpawn: []
 --- !u!114 &1346298416404595423
