@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EnemySpawnerManager : MonoBehaviour
 {
@@ -18,6 +20,11 @@ public class EnemySpawnerManager : MonoBehaviour
 	[SerializeField] TextMeshProUGUI waveTxt;
 	[SerializeField] CanvasGroup waveArea;
 
+	[Space]
+
+	[SerializeField] GameObject deathStuff;
+	[SerializeField] Button restartBtn;
+
 	List<IHasHealth> ActiveEnemies = new List<IHasHealth>();
 
 	public int CurrentWave { get; private set; }
@@ -29,6 +36,12 @@ public class EnemySpawnerManager : MonoBehaviour
 		DialogueManager.instance.SaySomething("I need to defend myself, let's grab that stick", 20);
 
 		PlayerStats.instance.OnDeath.AddListener(OnPlayerDie);
+
+		deathStuff.gameObject.SetActive(false);
+		restartBtn.onClick.AddListener(() => 
+		{
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		});
 	}
 
 	List<Transform> possibleSpawnPoints = new List<Transform>();
@@ -111,6 +124,9 @@ public class EnemySpawnerManager : MonoBehaviour
 				{
 					waveTxt.SetText($"YOU WIN!");
 
+					deathStuff.gameObject.SetActive(true);
+					Cursor.lockState = CursorLockMode.None;
+					Cursor.visible = true;
 					float alpha = 0;
 					DOTween.To(() => alpha, x => alpha = x, 1, 1).OnUpdate(() =>
 					{
@@ -128,6 +144,9 @@ public class EnemySpawnerManager : MonoBehaviour
 	void OnPlayerDie()
 	{
 		waveTxt.SetText($"YOU DIED...");
+		deathStuff.gameObject.SetActive(true);
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
 
 		float alpha = 0;
 		DOTween.To(() => alpha, x => alpha = x, 1, 1).OnUpdate(() =>

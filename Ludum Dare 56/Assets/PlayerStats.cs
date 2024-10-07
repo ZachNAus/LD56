@@ -1,12 +1,13 @@
 using DG.Tweening;
+using UnityEngine;
 
 public class PlayerStats : BaseHealth
 {
     public static PlayerStats instance;
 
-	public UnityEngine.AudioSource audioSource;
+	public AudioSource audioSource;
 
-	public UnityEngine.AudioClip onBlock;
+	public AudioClip onBlock;
 
 	protected override void Awake()
 	{
@@ -14,7 +15,7 @@ public class PlayerStats : BaseHealth
 		instance = this;
 	}
 
-	public override void TakeDamage(float damage, UnityEngine.Transform source, bool doKnockback)
+	public override void TakeDamage(float damage, Transform source, bool doKnockback)
 	{
 		float res = Player.instance.TakeDamage(damage, source);
 
@@ -27,7 +28,7 @@ public class PlayerStats : BaseHealth
 		else
 		{
 			if(onBlock)
-				GetComponent<UnityEngine.AudioSource>().PlayOneShot(onBlock);
+				GetComponent<AudioSource>().PlayOneShot(onBlock);
 		}
 
 		base.TakeDamage(res, source, doKnockback);
@@ -36,6 +37,9 @@ public class PlayerStats : BaseHealth
 	public override void Die()
 	{
 		Player.instance.Die();
+
+		Cursor.lockState = CursorLockMode.None;
+
 		base.Die();
 	}
 }
