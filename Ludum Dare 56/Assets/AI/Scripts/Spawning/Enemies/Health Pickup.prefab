@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthToGain: 1
   rotate: {x: 0, y: 0, z: 0}
+  pickupS: {fileID: 8300000, guid: 13446f99b97165641abe430c2bea491b, type: 3}
 --- !u!1001 &3932270115677261122
 PrefabInstance:
   m_ObjectHideFlags: 0
