@@ -210,12 +210,12 @@ public class Player : MonoBehaviour
 					if (holdable != null)
 					{
 						// Holding something.
-						if (Input.GetKey(dropKey))
-						{
-							DropHoldable();
-						}
+						//if (Input.GetKey(dropKey))
+						//{
+						//	DropHoldable();
+						//}
 						// Try to use the holdable.
-						else if (mouse1Down)
+						if (mouse1Down)
 						{
 							holdable.OnUse(true);
 						}
@@ -224,25 +224,22 @@ public class Player : MonoBehaviour
 							holdable.OnUse(false);
 						}
 					}
-					else
+					// Not holding anything.
+					if (mouse1Down)
 					{
-						// Not holding anything.
-						if (mouse1Down)
+						// Look for a holdable pickup.
+						// TODO: Better casting.
+						var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
+						foreach (var c in cast)
 						{
-							// Look for a holdable pickup.
-							// TODO: Better casting.
-							var cast = Physics.SphereCastAll(transform.position, 2f, Vector3.down, 0.1f);
-							foreach (var c in cast)
+							var pickup = c.transform.GetComponentInParent<Pickup>();
+							var hold = pickup?.Pick();
+							if (hold != null)
 							{
-								var pickup = c.transform.GetComponentInParent<Pickup>();
-								var hold = pickup?.Pick();
-								if (hold != null)
-								{
-									// Found something to hold.
-									Destroy(pickup.gameObject);
-									SetHoldable(hold);
-									break;
-								}
+								// Found something to hold.
+								Destroy(pickup.gameObject);
+								SetHoldable(hold);
+								break;
 							}
 						}
 					}
@@ -321,7 +318,7 @@ public class Player : MonoBehaviour
 		{
 			// Remove old holdable.
 			holdable.OnExit();
-			holdable.Drop();
+			//holdable.Drop();
 			Destroy(holdable.gameObject);
 		}
 		if (h != null)

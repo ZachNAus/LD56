@@ -153,7 +153,7 @@ public class EnemySpawnerManager : MonoBehaviour
 
 					cheese.SetActive(true);
 
-					PlayerStats.instance.playerDialogue.SaySomething("OH MY GOD! IS THAT MY CHEESE?!?! YIPEE!", 10);
+					PlayerStats.instance.playerDialogue.SaySomething("OH MY GOD! IS THAT MY CHEESE?!?! That is so gouda!", 10);
 				}
 				else
 				{
