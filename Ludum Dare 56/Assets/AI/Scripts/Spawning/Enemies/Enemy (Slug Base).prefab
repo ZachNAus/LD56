@@ -245,6 +245,9 @@ MonoBehaviour:
   flipAmount: -360
   deathType: 0
   toSpawn: []
+  mask:
+    serializedVersion: 2
+    m_Bits: 503
 --- !u!114 &1346298416404595423
 MonoBehaviour:
   m_ObjectHideFlags: 0

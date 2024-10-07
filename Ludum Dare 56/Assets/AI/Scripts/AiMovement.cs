@@ -78,6 +78,8 @@ public class AiMovement : MonoBehaviour
 
 	[SerializeField] Rigidbody[] toSpawn;
 
+	[SerializeField] LayerMask mask;
+
 	public float StunnedDuration { get; private set; }
 	State beforeState;
 
@@ -216,7 +218,7 @@ public class AiMovement : MonoBehaviour
 
 		var endPosition = transform.position + (dir * dist);
 
-		if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit))
+		if (Physics.Raycast(endPosition + Vector3.up * 50, Vector3.down, out rayHit, Mathf.Infinity, mask))
 		{
 			endPosition = rayHit.point;
 		}

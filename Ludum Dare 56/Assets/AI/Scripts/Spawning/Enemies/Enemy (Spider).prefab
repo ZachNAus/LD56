@@ -265,6 +265,9 @@ MonoBehaviour:
   - {fileID: 1141069977516251997}
   - {fileID: 5745524690715126810}
   - {fileID: 9007353398408560887}
+  mask:
+    serializedVersion: 2
+    m_Bits: 503
 --- !u!114 &4246588020818199497
 MonoBehaviour:
   m_ObjectHideFlags: 0
