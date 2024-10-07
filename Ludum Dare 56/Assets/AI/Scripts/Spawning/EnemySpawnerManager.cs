@@ -51,7 +51,6 @@ public class EnemySpawnerManager : MonoBehaviour
 			LadyBugDialogue.instance.SaySomething("Grab that stick and get to work!", 5);
 		}
 
-
 		PlayerStats.instance.OnDeath.AddListener(OnPlayerDie);
 
 		deathStuff.gameObject.SetActive(false);
