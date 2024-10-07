@@ -58,6 +58,11 @@ public class EnemySpawnerManager : MonoBehaviour
 				SpawnEnemy(enemy.Key);
 			}
 		}
+
+		if (string.IsNullOrEmpty(waves[CurrentWave].playerMessage) == false)
+		{
+			DialogueManager.instance.SaySomething(waves[CurrentWave].playerMessage);
+		}
 	}
 
 	void SpawnEnemy(Wave.EnemyStats enemy)

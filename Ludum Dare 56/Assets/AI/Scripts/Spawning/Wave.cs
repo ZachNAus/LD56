@@ -7,6 +7,8 @@ public class Wave : ScriptableObject
 {
     public EnemyDict toSpawn;
 
+    public string playerMessage;
+
     [System.Serializable]
     public class EnemyStats
 	{
