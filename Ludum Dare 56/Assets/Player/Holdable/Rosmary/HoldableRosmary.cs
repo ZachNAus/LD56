@@ -8,6 +8,8 @@ public class HoldableRosmary : Holdable
 	public SetActiveDuration hitbox;
 	public float cooldown;
 
+	public int damage = 2;
+
 	private float swingTime;
 
 	public override void OnEnter()
@@ -42,7 +44,7 @@ public class HoldableRosmary : Holdable
 			if (h != PlayerStats.instance && hitPeople.Contains(h) == false)
 			{
 				hitPeople.Add(h);
-				h.TakeDamage(1, transform, true);
+				h.TakeDamage(damage, transform, true);
 			}
 		}
 	}

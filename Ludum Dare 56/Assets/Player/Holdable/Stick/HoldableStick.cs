@@ -7,6 +7,10 @@ public class HoldableStick : Holdable
 	public SetActiveDuration hitbox;
 	public float cooldown;
 
+	[Space]
+
+	public int damage = 1;
+
 	private float swingTime;
 
 	public override void OnEnter()
@@ -43,7 +47,7 @@ public class HoldableStick : Holdable
 			if(h != PlayerStats.instance && hitPeople.Contains(h) == false)
 			{
 				hitPeople.Add(h);
-				h.TakeDamage(1, transform, true);
+				h.TakeDamage(damage, transform, true);
 			}
 		}
 	}
