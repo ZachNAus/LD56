@@ -4,6 +4,10 @@ public class PlayerStats : BaseHealth
 {
     public static PlayerStats instance;
 
+	public UnityEngine.AudioSource audioSource;
+
+	public UnityEngine.AudioClip onBlock;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -19,6 +23,11 @@ public class PlayerStats : BaseHealth
 			//UnityEngine.Camera.main.DOShakePosition(0.5f);
 
 			healthBar.transform.DOShakePosition(0.5f, 50);
+		}
+		else
+		{
+			if(onBlock)
+				GetComponent<UnityEngine.AudioSource>().PlayOneShot(onBlock);
 		}
 
 		base.TakeDamage(res, source, doKnockback);

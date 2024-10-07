@@ -14,6 +14,9 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	[SerializeField] float invulnTime;
 	float timeLastHit;
 
+	[SerializeField] AudioClip onDeathSFX;
+	[SerializeField] AudioClip onHitSFX;
+
 	public UnityEvent<Transform, bool> OnTakedamage;
 	public UnityEvent onDeath;
 
@@ -52,6 +55,9 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 		if(damage > 0)
 			OnTakedamage?.Invoke(source, doKnockback);
 
+		if (onHitSFX)
+			GetComponent<AudioSource>()?.PlayOneShot(onHitSFX);
+
 		if (IsDead)
 			Die();
 	}
@@ -59,5 +65,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	public virtual void Die()
 	{
 		OnDeath?.Invoke();
+
+		if (onDeathSFX)
+			GetComponent<AudioSource>()?.PlayOneShot(onDeathSFX);
 	}
 }
