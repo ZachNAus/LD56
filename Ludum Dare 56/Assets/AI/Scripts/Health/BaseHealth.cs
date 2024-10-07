@@ -18,7 +18,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	public UnityEvent onDeath;
 
 	public float MaxHealth => maxHealth;
-	public float CurrentHealth { get; private set; }
+	public float CurrentHealth { get; set; }
 
 	public bool IsDead => CurrentHealth <= 0;
 
@@ -49,7 +49,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 		if (healthBar)
 			healthBar.fillAmount = CurrentHealth / MaxHealth;
 
-		OnTakedamage?.Invoke(source, doKnockback);
+		if(damage > 0)
+			OnTakedamage?.Invoke(source, doKnockback);
 
 		if (IsDead)
 			Die();

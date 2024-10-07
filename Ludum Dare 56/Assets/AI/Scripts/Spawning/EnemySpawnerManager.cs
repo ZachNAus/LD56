@@ -9,7 +9,7 @@ public class EnemySpawnerManager : MonoBehaviour
 {
 	[SerializeField] Wave[] waves;
 
-	[SerializeField] Transform[] spawnPositions;
+	[SerializeField] List<Transform> spawnPositions = new List<Transform>();
 
 	[SerializeField] Transform enemyHolder;
 
@@ -60,14 +60,19 @@ public class EnemySpawnerManager : MonoBehaviour
 		}
 	}
 
-	void SpawnEnemy(GameObject enemy)
+	void SpawnEnemy(Wave.EnemyStats enemy)
 	{
-		var inst = Instantiate(enemy, enemyHolder);
+		var inst = Instantiate(enemy.enemy, enemyHolder);
 
 		//Pick a spawn point away from someone else
 		var random = possibleSpawnPoints[Random.Range(0, possibleSpawnPoints.Count)];
 
 		possibleSpawnPoints.Remove(random);
+
+		if (enemy.permanantlyRemoveSpot)
+		{
+			spawnPositions.Remove(random);
+		}
 
 		inst.transform.position = random.position;
 

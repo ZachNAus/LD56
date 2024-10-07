@@ -285,6 +285,9 @@ public class Player : MonoBehaviour
 
 	public virtual float TakeDamage(float damage, Transform source)
 	{
+		if (damage < 0)
+			return damage;
+
 		if (state == PlayerState.Blocking)
 		{
 			var dirToPlayer = (source.position - transform.position).normalized;

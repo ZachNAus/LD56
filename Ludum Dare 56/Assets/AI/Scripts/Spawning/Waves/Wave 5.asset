@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3610cb6607d658b41b77e0901d64464f, type: 3}
-  m_Name: Wave 2
+  m_Name: Wave 5
   m_EditorClassIdentifier: 
   toSpawn:
     m_keys:
     - enemy: {fileID: 6252450687822795562, guid: b881ed45992e210468c72bdfabb0cbdc,
         type: 3}
       permanantlyRemoveSpot: 0
-    m_values: 04000000
+    - enemy: {fileID: 5145756331015137735, guid: 8d71bb230f775ae4a9d48f81dbacb36f,
+        type: 3}
+      permanantlyRemoveSpot: 1
+    m_values: 0a00000002000000
