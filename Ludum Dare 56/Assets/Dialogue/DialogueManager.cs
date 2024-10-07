@@ -15,11 +15,11 @@ public class DialogueManager : MonoBehaviour
 	[SerializeField] float showNextCharDelay = 0.025f;
 	float timeOfLastChar;
 
-	public static DialogueManager instance;
+	//public static DialogueManager instance;
 
 	private void Awake()
 	{
-		instance = this;
+		//instance = this;
 	}
 
 	float ExtraLifeTime;

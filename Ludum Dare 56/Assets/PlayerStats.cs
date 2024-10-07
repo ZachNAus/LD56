@@ -9,6 +9,8 @@ public class PlayerStats : BaseHealth
 
 	public AudioClip onBlock;
 
+	public DialogueManager playerDialogue;
+
 	protected override void Awake()
 	{
 		base.Awake();

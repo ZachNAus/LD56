@@ -33,14 +33,31 @@ public class EnemySpawnerManager : MonoBehaviour
 	{
 		//StartWave();
 
-		DialogueManager.instance.SaySomething("I need to defend myself, let's grab that stick", 20);
+		StartCoroutine(StartCutscene());
+		IEnumerator StartCutscene()
+		{
+			PlayerStats.instance.playerDialogue.SaySomething("What happened to my cheese!?!?!?!?!", 0);
+			yield return new WaitForSeconds(3);
+
+			LadyBugDialogue.instance.SaySomething("Hey friend! No need to be so loud!", 0);
+			yield return new WaitForSeconds(3);
+
+			PlayerStats.instance.playerDialogue.SaySomething("Who did this, I need revenge!!", 0);
+			yield return new WaitForSeconds(3);
+
+			LadyBugDialogue.instance.SaySomething("Well, you're in luck, you have that shield right? You just need a sword.", 0);
+			yield return new WaitForSeconds(4);
+		
+			LadyBugDialogue.instance.SaySomething("Grab that stick and get to work!", 5);
+		}
+
 
 		PlayerStats.instance.OnDeath.AddListener(OnPlayerDie);
 
 		deathStuff.gameObject.SetActive(false);
-		restartBtn.onClick.AddListener(() => 
+		restartBtn.onClick.AddListener(() =>
 		{
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		});
 	}
 
@@ -76,7 +93,7 @@ public class EnemySpawnerManager : MonoBehaviour
 
 		if (string.IsNullOrEmpty(waves[CurrentWave].playerMessage) == false)
 		{
-			DialogueManager.instance.SaySomething(waves[CurrentWave].playerMessage, 0);
+			PlayerStats.instance.playerDialogue.SaySomething(waves[CurrentWave].playerMessage, 0);
 		}
 	}
 
