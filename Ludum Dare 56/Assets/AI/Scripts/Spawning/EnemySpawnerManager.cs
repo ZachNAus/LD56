@@ -25,6 +25,8 @@ public class EnemySpawnerManager : MonoBehaviour
 	[SerializeField] GameObject deathStuff;
 	[SerializeField] Button restartBtn;
 
+	[SerializeField] GameObject cheese;
+
 	List<IHasHealth> ActiveEnemies = new List<IHasHealth>();
 
 	public int CurrentWave { get; private set; }
@@ -32,7 +34,7 @@ public class EnemySpawnerManager : MonoBehaviour
 	private void Start()
 	{
 		//StartWave();
-
+		cheese.SetActive(false);
 		StartCoroutine(StartCutscene());
 		IEnumerator StartCutscene()
 		{
@@ -148,6 +150,10 @@ public class EnemySpawnerManager : MonoBehaviour
 					{
 						waveArea.alpha = alpha;
 					});
+
+					cheese.SetActive(true);
+
+					PlayerStats.instance.playerDialogue.SaySomething("OH MY GOD! IS THAT MY CHEESE?!?! YIPEE!", 10);
 				}
 				else
 				{
