@@ -10,7 +10,7 @@ public class HoldableRosmary : Holdable
 
 	public int damage = 2;
 
-	public AudioClip onAtk;
+	public AudioClip[] onAtk;
 
 	private float swingTime;
 
@@ -36,8 +36,7 @@ public class HoldableRosmary : Holdable
 			hitbox.Show();
 			// TODO: Disallow while jumping?
 
-			if(onAtk)
-				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
+			PlayerStats.instance.audioSource.PlayOneShot(onAtk[UnityEngine.Random.Range(0, onAtk.Length)]);
 		}
 	}
 

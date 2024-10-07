@@ -281,7 +281,10 @@ MonoBehaviour:
   healthBar: {fileID: 7153536073491648631}
   invulnTime: 0.5
   onDeathSFX: {fileID: 0}
-  onHitSFX: {fileID: 8300000, guid: 237694783eec7934cb816d7881e2d742, type: 3}
+  onHitSFX:
+  - {fileID: 8300000, guid: 701bca74c2321134ca21a8cc3104778a, type: 3}
+  - {fileID: 8300000, guid: 237694783eec7934cb816d7881e2d742, type: 3}
+  - {fileID: 8300000, guid: e97d9567fe2bf45439f7b4dd544fa663, type: 3}
   OnTakedamage:
     m_PersistentCalls:
       m_Calls: []

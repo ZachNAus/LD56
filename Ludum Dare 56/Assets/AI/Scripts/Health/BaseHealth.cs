@@ -15,7 +15,7 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 	float timeLastHit;
 
 	[SerializeField] AudioClip onDeathSFX;
-	[SerializeField] AudioClip onHitSFX;
+	[SerializeField] AudioClip[] onHitSFX;
 
 	public UnityEvent<Transform, bool> OnTakedamage;
 	public UnityEvent onDeath;
@@ -55,8 +55,8 @@ public class BaseHealth : MonoBehaviour, IHasHealth
 		if(damage > 0)
 			OnTakedamage?.Invoke(source, doKnockback);
 
-		if (onHitSFX)
-			GetComponent<AudioSource>()?.PlayOneShot(onHitSFX);
+		if (onHitSFX != null && onHitSFX.Length > 0)
+			GetComponent<AudioSource>()?.PlayOneShot(onHitSFX[Random.Range(0, onHitSFX.Length)]);
 
 		if (IsDead)
 			Die();

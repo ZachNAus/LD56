@@ -9,7 +9,7 @@ public class HoldableNeedleSword : Holdable
 
 	public int damage;
 
-	public AudioClip onAtk;
+	public AudioClip[] onAtk;
 
 	private float swingTime;
 
@@ -35,8 +35,7 @@ public class HoldableNeedleSword : Holdable
 			hitbox.Show();
 			// TODO: Disallow while jumping?
 
-			if (onAtk)
-				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
+			PlayerStats.instance.audioSource.PlayOneShot(onAtk[UnityEngine.Random.Range(0, onAtk.Length)]);
 		}
 	}
 

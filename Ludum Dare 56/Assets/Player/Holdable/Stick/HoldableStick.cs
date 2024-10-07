@@ -11,7 +11,7 @@ public class HoldableStick : Holdable
 
 	public int damage = 1;
 
-	public AudioClip onAtk;
+	public AudioClip[] onAtk;
 
 	private float swingTime;
 
@@ -37,8 +37,7 @@ public class HoldableStick : Holdable
 			hitbox.Show();
 			// TODO: Disallow while jumping?
 
-			if (onAtk)
-				PlayerStats.instance.audioSource.PlayOneShot(onAtk);
+			PlayerStats.instance.audioSource.PlayOneShot(onAtk[UnityEngine.Random.Range(0, onAtk.Length)]);
 		}
 	}
 
@@ -49,7 +48,7 @@ public class HoldableStick : Holdable
 		if (other.TryGetComponent<IHasHealth>(out var h))
 		{
 			// TODO: Pass the player here instead?
-			if(h != PlayerStats.instance && hitPeople.Contains(h) == false)
+			if (h != PlayerStats.instance && hitPeople.Contains(h) == false)
 			{
 				hitPeople.Add(h);
 				h.TakeDamage(damage, transform, true);
