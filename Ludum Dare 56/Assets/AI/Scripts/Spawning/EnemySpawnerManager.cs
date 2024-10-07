@@ -26,7 +26,7 @@ public class EnemySpawnerManager : MonoBehaviour
 	{
 		//StartWave();
 
-		DialogueManager.instance.SaySomething("I need to defend myself, let's grab that stick", 4);
+		DialogueManager.instance.SaySomething("I need to defend myself, let's grab that stick", 20);
 
 		PlayerStats.instance.OnDeath.AddListener(OnPlayerDie);
 	}
