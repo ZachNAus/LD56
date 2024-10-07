@@ -48,7 +48,7 @@ public class EnemySpawnerManager : MonoBehaviour
 			yield return new WaitForSeconds(3);
 
 			LadyBugDialogue.instance.SaySomething("Well, you're in luck, you have that shield right? You just need a sword.", 0);
-			yield return new WaitForSeconds(4);
+			yield return new WaitForSeconds(5);
 		
 			LadyBugDialogue.instance.SaySomething("Grab that stick and get to work!", 5);
 		}
